@@ -1,8 +1,10 @@
 var fs = require('fs');
 var cp = require('child_process');
+var readline = require('readline');
 
 var filename = '';              // Input file, in Fountain screenplay format
 var tempfile = 'festin.txt';    // The file that each spoken line is written to
+var voice = 'kal_diphone';
 
 process.argv.forEach(function (val, index, array) {
   if (index > 1) {
@@ -15,13 +17,22 @@ if (filename == '') {
   return;
 }
 
-var lineReader = require('readline').createInterface({
+var voices =  {};
+var voiceReader = readline.createInterface({
   terminal: false,
-  input: fs.createReadStream(filename)
+  input: fs.createReadStream('chars.txt')
+});
+voiceReader.on('line', function (line) {
+  var mapping = line.split(',');
+  voices[mapping[0]] = mapping[1];
 });
 
 var speaker = '';               // Track who's speaking to change voices
 var lineno = 1;                 // Count lines for easy addressing
+var lineReader = readline.createInterface({
+  terminal: false,
+  input: fs.createReadStream(filename)
+});
 lineReader.on('line', function (line) {
   if (line.length > 0 && (line[0] == '#' || line[0] == ' ')) {
     /* comment */;
@@ -30,7 +41,8 @@ lineReader.on('line', function (line) {
       && line.indexOf('INT.') != 0
       && line.indexOf('CUT') != 0
       && line.indexOf('PAN') != 0
-      && line.indexOf('TRANSITION') != 0) {
+      && line.indexOf('TRANSITION') != 0
+      && line.indexOf('(') != 0) {
       // Grab the person's unmodified name
       speaker = line.split(' ')[0];
     } else {
@@ -40,7 +52,13 @@ lineReader.on('line', function (line) {
     // Write out the line, then use Festival to create the audio
     fs.writeFileSync(tempfile, line);
     var outfile = './output/speech' + lineno + '.wav';
-    var talk = cp.spawnSync('/usr/bin/text2wave', ['-o', outfile, tempfile]);
+    var v = voice;
+    if (typeof voices[speaker] != 'undefined') {
+      v = voices[speaker];
+    }
+
+    var talk = cp.spawnSync('/usr/bin/text2wave',
+      ['-o', outfile, '-eval', '(voice_' + v + ')', tempfile]);
   }
   
   lineno += 1;                  // Next line
