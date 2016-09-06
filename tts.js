@@ -41,14 +41,14 @@ lineReader.on('line', function (line) {
       && line.indexOf('INT.') != 0
       && line.indexOf('CUT') != 0
       && line.indexOf('PAN') != 0
-      && line.indexOf('TRANSITION') != 0
-      && line.indexOf('(') != 0) {
+      && line.indexOf('TRANSITION') != 0) {
       // Grab the person's unmodified name
       speaker = line.split(' ')[0];
     } else {
       /* direction */;
     }
-  } else if (line[0] == line[0].toUpperCase()) {
+  } else if (line[0] == line[0].toUpperCase()
+      && line.indexOf('(') != 0) {
     // Write out the line, then use Festival to create the audio
     fs.writeFileSync(tempfile, line);
     var outfile = './output/speech' + lineno + '.wav';
