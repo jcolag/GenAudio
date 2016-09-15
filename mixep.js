@@ -1,11 +1,13 @@
 var fs = require('fs');
 var cp = require('child_process');
 var readline = require('readline');
+var tmp = require('tmp');
 
 var script = '';
 var soundFolder = '';
 var destFolder = '';
 var prefix = 'speech';
+var plen = prefix.length;
 
 process.argv.forEach(function (val, index, array) {
   if (index == 2) {
@@ -36,6 +38,7 @@ soundIndex.forEach(function (line, index, array) {
   soundIndex[index] = line.split('\t');
 });
 
+var tmpDir = tmp.dirSync({unsafeCleanup: true});
 var backgroundSounds = [];
 var lineno = 1;                 // Count lines for easy addressing
 var lineReader = readline.createInterface({
@@ -81,48 +84,93 @@ lineReader.on('line', function (line) {
   lineno += 1;
 }).on('close', function (err) {
   var timecode = 0.0;
-  var plen = prefix.length;
-  var empty = cp.spawnSync('/usr/bin/rec', [ destFolder + 'result.wav', 'trim', 0, 0 ])
-  fs.readdirSync(destFolder).sort(function (a, b) {
-    var aNames = a.slice(plen).split('-');
-    var bNames = b.slice(plen).split('-');
-    aNames.forEach(function (n, i, a) { aNames[i] = parseInt(n, 10); });
-    bNames.forEach(function (n, i, a) { bNames[i] = parseInt(n, 10); });
-    if (aNames[0] > bNames[0]) {
-      return 1;
-    } else if (aNames[0] < bNames[0]) {
-      return -1;
-    } else if (aNames.length == 1) {
-      return 0;
-    } else if (aNames[1] > bNames[1]) {
-      return 1;
-    } else if (aNames[1] < bNames[1]) {
-      return -1;
-    } else {
-      return 0;
-    }
-  }).forEach(function (file, index, array) {
+  var empty = cp.spawnSync('/usr/bin/rec', [ 'result.wav', 'trim', 0, 0 ])
+  var channels = 0;
+  var brate = 0;
+  var srate = 0;
+  fs.readdirSync(destFolder).forEach(function (file, index, array) {
+    var proc = cp.spawnSync('/usr/bin/soxi', [ '-c', destFolder + file ]);
+    var c = parseInt(proc.stdout.toString().trim(), 10);
+    proc = cp.spawnSync('/usr/bin/soxi', [ '-b', destFolder + file ]);
+    var b = parseInt(proc.stdout.toString().trim(), 10);
+    proc = cp.spawnSync('/usr/bin/soxi', [ '-s', destFolder + file ]);
+    var s = parseInt(proc.stdout.toString().trim(), 10);
+    channels = Math.max(channels, c);
+    brate = Math.max(brate, b);
+    srate = Math.max(srate, s);
+  });
+  if (srate > 48000) {
+    srate = 48000;
+  }
+  fs.readdirSync(destFolder).sort(audioFileSort).forEach(function (file, index, array) {
     var background = false;
     backgroundSounds.forEach(function (name, index, array) {
       if (file == name) {
         background = true;
       }
     });
+    var normalize = cp.spawnSync('/usr/bin/sox',
+      [ '--norm', destFolder + file, '--bits', brate, '--channels', channels,
+        tmpDir.name + '/' + file, 'rate', '-v', '-s', srate ]);
+    fs.renameSync(tmpDir.name + '/' + file, destFolder + file);
     var timing = cp.spawnSync('/usr/bin/soxi', [ '-D', destFolder + file ]);
     var length = timing.stdout.toString().trim();
     if (timing.stderr.toString().trim() != '') {
+      console.log(file);
       console.log(timing.stderr.toString().trim());
-    } else if (!background) {
+    } else if (background) {
+      cp.spawnSync('/usr/bin/ffmpeg',
+        [ '-ar', srate, '-t', timecode, '-f', 's16le', '-acodec',
+          'pcm_s16le', '-ac', channels, '-i', '/dev/zero', '-acodec',
+          'libmp3lame', '-aq', '4', tmpDir.name + '/empty.mp3' ]);
+//      cp.spawnSync('/usr/bin/rec',
+//        [ '--bits', brate, '--channels', channels, '--rate', srate,
+//          tmpDir.name + '/empty.wav', 'trim', 0, timecode ]);
+      var append = cp.spawnSync('/usr/bin/sox',
+        [ tmpDir.name + '/empty.mp3',
+          destFolder + file,
+          tmpDir.name + '/' + file ]);
+      console.log(file + ' offset by ' + timecode + ' seconds');
+    } else {
       var dur = parseFloat(timing.stdout.toString().trim(), 10);
-      console.log(file.slice(plen) + ' - ' + dur);
       timecode += dur;
       var append = cp.spawnSync('/usr/bin/sox',
-        [ '-m', destFolder + 'empty.wav', destFolder + file ]);
-    } else {
+        [ '--norm', 'result.wav', destFolder + file, tmpDir.name + '/result.wav' ]);
+      fs.renameSync(tmpDir.name + '/result.wav', 'result.wav');
+      console.log(file + ' appended');
     }
   });
-  console.log(timecode);
+  fs.readdirSync(tmpDir.name).sort(audioFileSort).forEach(function (file, index, array) {
+    var mix = cp.spawnSync('/usr/bin/sox',
+      [ '-m', 'result.wav', tmpDir.name + '/' + file, tmpDir.name + '/result.wav' ]);
+    if (mix.stderr.toString().trim() != '') {
+      console.log(mix.stderr.toString().trim());
+    }
+    fs.renameSync(tmpDir.name + '/result.wav', 'result.wav');
+    console.log(file + ' mixed');
+  });
+  console.log(timecode + ' seconds total');
 });
+
+function audioFileSort(a, b) {
+	var aNames = a.slice(plen).split('-');
+	var bNames = b.slice(plen).split('-');
+	aNames.forEach(function (n, i, a) { aNames[i] = parseInt(n, 10); });
+	bNames.forEach(function (n, i, a) { bNames[i] = parseInt(n, 10); });
+	if (aNames[0] > bNames[0]) {
+		return 1;
+	} else if (aNames[0] < bNames[0]) {
+		return -1;
+	} else if (aNames.length == 1) {
+		return 0;
+	} else if (aNames[1] > bNames[1]) {
+		return 1;
+	} else if (aNames[1] < bNames[1]) {
+		return -1;
+	} else {
+		return 0;
+	}
+}
 
 function fileNameFromCode(index, code) {
   var out = null;
