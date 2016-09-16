@@ -38,7 +38,7 @@ soundIndex.forEach(function (line, index, array) {
   soundIndex[index] = line.split('\t');
 });
 
-var tmpDir = tmp.dirSync({unsafeCleanup: true});
+var tmpDir = tmp.dirSync(); //{unsafeCleanup: true});
 var backgroundSounds = [];
 var lineno = 1;                 // Count lines for easy addressing
 var lineReader = readline.createInterface({
@@ -119,17 +119,19 @@ lineReader.on('line', function (line) {
       console.log(file);
       console.log(timing.stderr.toString().trim());
     } else if (background) {
-      cp.spawnSync('/usr/bin/ffmpeg',
-        [ '-ar', srate, '-t', timecode, '-f', 's16le', '-acodec',
-          'pcm_s16le', '-ac', channels, '-i', '/dev/zero', '-acodec',
-          'libmp3lame', '-aq', '4', tmpDir.name + '/empty.mp3' ]);
-//      cp.spawnSync('/usr/bin/rec',
-//        [ '--bits', brate, '--channels', channels, '--rate', srate,
-//          tmpDir.name + '/empty.wav', 'trim', 0, timecode ]);
+      var silence = cp.spawnSync('/usr/bin/sox',
+        [ '-n', '-r', srate, '-c', channels, tmpDir.name + '/empty.wav',
+          'trim', '0.0', timecode ]);
+      if (silence.stderr.toString().trim()) {
+        console.log('silence: ' + silence.stderr.toString().trim());
+      }
       var append = cp.spawnSync('/usr/bin/sox',
-        [ tmpDir.name + '/empty.mp3',
-          destFolder + file,
+        [ tmpDir.name + '/empty.wav',
+          destFolder + '/' + file,
           tmpDir.name + '/' + file ]);
+      if (append.stderr.toString().trim()) {
+        console.log('append: ' + silence.stderr.toString().trim());
+      }
       console.log(file + ' offset by ' + timecode + ' seconds');
     } else {
       var dur = parseFloat(timing.stdout.toString().trim(), 10);
@@ -137,7 +139,7 @@ lineReader.on('line', function (line) {
       var append = cp.spawnSync('/usr/bin/sox',
         [ '--norm', 'result.wav', destFolder + file, tmpDir.name + '/result.wav' ]);
       fs.renameSync(tmpDir.name + '/result.wav', 'result.wav');
-      console.log(file + ' appended');
+      console.log(file + ' appended, total time at ' + timecode);
     }
   });
   fs.readdirSync(tmpDir.name).sort(audioFileSort).forEach(function (file, index, array) {
