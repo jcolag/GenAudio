@@ -130,7 +130,9 @@ lineReader.on('line', function (line) {
           destFolder + '/' + file,
           tmpDir.name + '/' + file ]);
       if (append.stderr.toString().trim()) {
-        console.log('append: ' + silence.stderr.toString().trim());
+        console.log('prepend silence: ' + silence.stderr.toString().trim());
+      } else {
+        fs.unlinkSync(tmpDir.name + '/empty.wav');
       }
       console.log(file + ' offset by ' + timecode + ' seconds');
     } else {
@@ -142,13 +144,20 @@ lineReader.on('line', function (line) {
       console.log(file + ' appended, total time at ' + timecode);
     }
   });
-  fs.readdirSync(tmpDir.name).sort(audioFileSort).forEach(function (file, index, array) {
+  fs.readdirSync(tmpDir).sort(audioFileSort).forEach(function (file, index, array) {
     var mix = cp.spawnSync('/usr/bin/sox',
-      [ '-m', 'result.wav', tmpDir.name + '/' + file, tmpDir.name + '/result.wav' ]);
+      [ '-m', 'result.wav', tmpDir + '/' + file, tmpDir + '/result.wav' ]);
     if (mix.stderr.toString().trim() != '') {
       console.log(mix.stderr.toString().trim());
     }
-    fs.renameSync(tmpDir.name + '/result.wav', 'result.wav');
+    var compand = cp.spawnSync('/usr/bin/sox',
+      [ tmpDir + '/result.wav', tmpDir + '/resultA.wav', 'compand', '0.3,1',
+        '6:-70,-60,-20', '-5', '-90', '0.2' ]);
+    if (compand.stderr.toString().trim() != '') {
+      console.log(compand.stderr.toString().trim());
+    }
+    fs.unlinkSync(tmpDir + '/result.wav');
+    fs.renameSync(tmpDir + '/resultA.wav', 'result.wav');
     console.log(file + ' mixed');
   });
   console.log(timecode + ' seconds total');
