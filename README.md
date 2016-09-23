@@ -19,7 +19,21 @@ Note that _genmusic_ __should__ take a third parameter for the randomness seed, 
 
 ## `mixep.js`
 
+The _mixep_ script does the heavy lifting of sequencing and mixing, producing a final audio file, presuming that earlier steps (`tts.js`, `genmusic.js`, and processing the latter's resulting CSound files) have been completed.  It takes three arguments:  The Fountain-formatted screenplay, the location (a folder) of any sound effects referenced by the screenplay, and the location (folder) of the voice files of the screenplay lines (from `tts.js`).
 
+The output is `result.wav`, which can then be converted to any other format of relevance.
+
+### Sound Index
+
+One of the extensions to Fountain required by this project is an annotation for music and sound effects.  This are a bracketed key, optionally followed by tilde.  That is, it might look like `[15]` or `[33~]`, with the latter indicating that the audio should be played alongside whatever else is in the screenplay.
+
+For this to work, a file named `index.txt` must be created and placed into the folder containing the sound effects.  It should be a tab-separated list in the following format, only some of which is used by `mixep.js`:
+
+|Number|Name|Time|License|File|Creator|
+|:----:|:--|---:|:-----:|:---|:------|
+|13|Flyer|5.985986|BY|flyer_swoop.flac|patchen|
+
+The _Number_ and _Name_ (first and second columns) can be used interchangeably in the screenplay, and the file (fourth column) will be copied into the audio folder with a name appropriate to the mixing process.  The time is for reference (third column), and the license and creator (fourth and sixth columns) should be maintained to help ensure that proper credit is given.
 
 ## `scrcount.sh`
 
