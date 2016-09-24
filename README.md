@@ -37,11 +37,11 @@ The _Number_ and _Name_ (first and second columns) can be used interchangeably i
 
 ## `scrcount.sh`
 
-
+The _scrcount_ script reads through a Fountain-formatted screenplay and counts the spoken words in each act, multiplying them by a semi-standard fudge factor (120) to arrive at an estimate of total time for the audio.  It takes one parameter, the screenplay file.
 
 ## `stats.sh`
 
-
+The _stats_ script goes through a folder of audio files (for example, the output of `tts.js`) and gathers statistics on each file contained inside:  The file type, sample rate, number of channels, number of samples, duration in seconds, bits per sample, and encoding.  It takes two parameters, the folder to search and the file to write the statistics to, with the filenames.
 
 ## `tts.js`
 
