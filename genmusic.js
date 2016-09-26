@@ -13,15 +13,25 @@
  * software synthesizer.
  */
 
-var fs = require('fs');
+const fs = require('fs');
+const commandLineArgs = require('command-line-args');
+
+const optionDefinitions = [
+  { name: 'style', alias: 'y', type: String },
+  { name: 'seed', alias: 's', type: String, multiple: true },
+  { name: 'time', alias: 't', type: Number },
+];
+const options = commandLineArgs(optionDefinitions);
+
+const style = options.hasOwnProperty('style') ? options.style[0] : 'g';
+const total_time = options.hasOwnProperty('time') ? options.time : 60;
+const seed = options.hasOwnProperty('seed') ? options.seed.join(' ') : '';
 var current_notes = 0;
 var note_overlap = 15;
 var note_timeout = 300;
 var last_freq = 880;
 var last_time = 0;
-var total_time = 60;
-var style = 'g';
-var startcode = '<CsShortLicense>\n\
+const startcode = '<CsShortLicense>\n\
 		6\n\
 	</CsShortLicense>\n\
 	<CsoundSynthesizer>\n\
@@ -67,19 +77,11 @@ var startcode = '<CsShortLicense>\n\
 		endin\n\
 	</CsInstruments>\n\
 	<CsScore>';
-var endcode =  '</CsScore>\n\
+const endcode =  '</CsScore>\n\
 	</CsoundSynthesizer>';
 
 eval(fs.readFileSync('lib/seedrandom.js') + '');
-Math.seedrandom("Some music");
-
-process.argv.forEach(function (val, index, array) {
-  if (index > 1 && val == parseInt(val, 10)) {
-    total_time = val;
-  } else if (index > 1) {
-    style = val[0];
-  }
-});
+Math.seedrandom(seed);
 
 console.log(startcode);
 if (style === 'g') {
