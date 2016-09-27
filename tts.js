@@ -1,18 +1,18 @@
-var fs = require('fs');
-var cp = require('child_process');
-var readline = require('readline');
+const fs = require('fs');
+const cp = require('child_process');
+const readline = require('readline');
+const commandLineArgs = require('command-line-args');
 
-var filename = '';              // Input file, in Fountain screenplay format
+const optionDefinitions = [
+  { name: 'play', alias: 'p', type: String },
+];
+const options = commandLineArgs(optionDefinitions);
+
+var filename = options.play;    // Input file, in Fountain screenplay format
 var tempfile = 'festin.txt';    // The file that each spoken line is written to
 var voice = 'kal_diphone';
 
-process.argv.forEach(function (val, index, array) {
-  if (index > 1) {
-    filename = val;             // Set the input file
-  }
-});
-
-if (filename == '') {
+if (!options.hasOwnProperty('play')) {
   // Can't do anything useful without input
   return;
 }
