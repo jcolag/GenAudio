@@ -1,25 +1,25 @@
-var fs = require('fs');
-var cp = require('child_process');
-var readline = require('readline');
-var tmp = require('tmp');
+const fs = require('fs');
+const cp = require('child_process');
+const readline = require('readline');
+const tmp = require('tmp');
+const commandLineArgs = require('command-line-args');
 
-var script = '';
-var soundFolder = '';
-var destFolder = '';
-var prefix = 'speech';
-var plen = prefix.length;
+const prefix = 'speech';
+const plen = prefix.length;
+const optionDefinitions = [
+  { name: 'play', alias: 'p', type: String },
+  { name: 'soundfolder', alias: 's', type: String },
+  { name: 'destfolder', alias: 'd', type: String },
+];
+const options = commandLineArgs(optionDefinitions);
 
-process.argv.forEach(function (val, index, array) {
-  if (index == 2) {
-    script = val;
-  } else if (index == 3) {
-    soundFolder = val;
-  } else if (index == 4) {
-    destFolder = val;
-  }
-});
+var script = options.play;
+var soundFolder = options.soundfolder;
+var destFolder = options.destfolder;
 
-if (destFolder == '') {
+if (!options.hasOwnProperty('play')
+   || !options.hasOwnProperty('soundfolder')
+   || !options.hasOwnProperty('destfolder')) {
   // Can't do anything useful without input
   return;
 } else if (destFolder.slice(-1) != '/') {
