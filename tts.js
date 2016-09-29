@@ -57,8 +57,8 @@ lineReader.on('line', function (line) {
       v = voices[speaker];
     }
 
-    var talk = cp.spawnSync('/usr/bin/text2wave',
-      ['-o', outfile, '-eval', '(voice_' + v + ')', tempfile]);
+    var talk = cp.spawnSync('mimic',
+      ['-o', outfile, '-voice', v, '-f', tempfile]);
   }
   
   lineno += 1;                  // Next line
