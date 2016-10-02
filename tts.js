@@ -50,7 +50,8 @@ lineReader.on('line', function (line) {
   } else if (line[0] == line[0].toUpperCase()
       && line.indexOf('(') != 0) {
     // Write out the line, then use Festival to create the audio
-    fs.writeFileSync(tempfile, line.replace('_', ''));
+    line = line.replace(/_/g, '');
+    fs.writeFileSync(tempfile, line);
     var outfile = './output/speech' + lineno + '.wav';
     var v = voice;
     if (typeof voices[speaker] != 'undefined') {
