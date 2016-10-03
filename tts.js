@@ -58,8 +58,14 @@ lineReader.on('line', function (line) {
       v = voices[speaker];
     }
 
-    var talk = cp.spawnSync('mimic',
+    console.log(line);
+    console.log(v);
+    console.log(outfile);
+    var talk = cp.spawnSync('/home/john/Documents/code/mimic/bin/mimic',
       ['-o', outfile, '-voice', v, '-f', tempfile]);
+    if (talk.stderr.toString().trim()) {
+      console.log('>>> talk: ' + talk.stderr.toString().trim());
+    }
   }
   
   lineno += 1;                  // Next line
