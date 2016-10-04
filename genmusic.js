@@ -45,12 +45,12 @@ const startcode = '<CsShortLicense>\n\
 		0dbfs = 1\n\
 		giSine   ftgen    0, 0, 2^12, 10, 1\n\
 				instr 1\n\
-		aEnv    linseg  0, 0.1, 0.4, p3, 0\n\
+		aEnv    linseg  0, 0.1, 0.2, p3, 0\n\
 		aSig    poscil  aEnv, p4, giSine\n\
 				outs	aSig, aSig\n\
 		endin\n\
 				instr 2\n\
-		aEnv    linseg  0, 0.1, 0.25, p3, 0\n\
+		aEnv    linseg  0, 0.1, 0.125, p3, 0\n\
 		a1      poscil  aEnv, p4, giSine\n\
 		a2      poscil  aEnv, p4 / 1.004, giSine\n\
 		a3      poscil  aEnv, p4 * 1.004, giSine\n\
@@ -58,7 +58,7 @@ const startcode = '<CsShortLicense>\n\
 				outs	aSig, aSig\n\
 		endin\n\
 				instr 3\n\
-		aEnv    linseg  0, p3 / 3, 0.1, p3 / 3, 0.1, p3 / 3, 0\n\
+		aEnv    linseg  0, p3 / 3, 0.05, p3 / 3, 0.05, p3 / 3, 0\n\
 		a1      poscil  aEnv, p4 / 1.414, giSine\n\
 		a2      poscil  aEnv, p4 / 2 * 1.004, giSine\n\
 		a3      poscil  aEnv, p4 / 2 / 1.004, giSine\n\
@@ -68,7 +68,7 @@ const startcode = '<CsShortLicense>\n\
 				outs a1, a1\n\
 		endin\n\
 				instr 4\n\
-		aEnv    linseg  0, p3 / 3, 0.1\n\
+		aEnv    linseg  0, p3 / 3, 0.05\n\
 		a1      poscil  aEnv, p4, giSine\n\
 		a2      poscil  aEnv, p4 * 1.335, giSine\n\
 		a3      poscil  aEnv, p4 * 1.414, giSine\n\
