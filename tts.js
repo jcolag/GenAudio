@@ -61,7 +61,7 @@ lineReader.on('line', function (line) {
     console.log(line);
     console.log(v);
     console.log(outfile);
-    var talk = cp.spawnSync('/home/john/Documents/code/mimic/bin/mimic',
+    var talk = cp.spawnSync('mimic',
       ['-o', outfile, '-voice', v, '-f', tempfile]);
     if (talk.stderr.toString().trim()) {
       console.log('>>> talk: ' + talk.stderr.toString().trim());
