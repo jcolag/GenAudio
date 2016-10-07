@@ -13,9 +13,15 @@ It takes the Fountain file as a parameter.
 
 ## `genmusic.js`
 
-The _genmusic_ script uses trivially-guided random elements to generate musical scores in CSound format.  It takes two arguments, a time in seconds that the music should play and an optional parameter (which can be anything) to produce the simpler, harsher melodies.
+The _genmusic_ script uses trivially-guided random elements to generate musical scores in CSound format.  It takes up to three arguments, a time in seconds that the music should play, an optional parameter (which can be anything) to produce the simpler, harsher melodies, and a randomness seed.
 
-Note that _genmusic_ __should__ take a third parameter for the randomness seed, soon enough.  But at least for right now, the seed can be changed in code.
+| Long Name | Short Name | Type | Description |
+|:--------- |:----------:|:----:|:----------- |
+| `--style` | `-y` | String | Change the style from the default `g`eneric |
+| `--seed` | `-s` | String | A series of terms to use as a random seed, default empty |
+| `--time` | `-t` | Number | Number of seconds of music to generate, default `60` |
+
+CSound then renders the music to `output.wav` in the current folder.
 
 ## `mixep.js`
 
