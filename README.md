@@ -27,6 +27,12 @@ CSound then renders the music to `output.wav` in the current folder.
 
 The _mixep_ script does the heavy lifting of sequencing and mixing, producing a final audio file, presuming that earlier steps (`tts.js`, `genmusic.js`, and processing the latter's resulting CSound files) have been completed.  It takes three arguments:  The Fountain-formatted screenplay, the location (a folder) of any sound effects referenced by the screenplay, and the location (folder) of the voice files of the screenplay lines (from `tts.js`).
 
+| Long Name | Short Name | Type | Description |
+|:--------- |:----------:|:----:|:----------- |
+| `--play`        | `-p` | String | The screenplay file |
+| `--soundfolder` | `-s` | String | The folder containing the required sound effects and music |
+| `--destfolder`  | `-d` | String | The folder containing the voiced lines from `tts.js` |
+
 The output is `result.wav`, which can then be converted to any other format of relevance.
 
 ### Sound Index
