@@ -57,11 +57,15 @@ The _stats_ script goes through a folder of audio files (for example, the output
 
 ## `tts.js`
 
-The _tts_ script walks through a Fountain-formatted screenplay and uses Festival to "render" each line as an audio file.  The output files are each named after the line number in the screenplay ("`speech###.wav`').  It takes one parameter, the screenplay file, and places all output files into a folder called `output` in the current folder.
+The _tts_ script walks through a Fountain-formatted screenplay and uses Mimic to "render" each line as an audio file.  The output files are each named after the line number in the screenplay ("`speech###.wav`').  It takes one parameter, the screenplay file, and places all output files into a folder called `output` in the current folder.
+
+| Long Name | Short Name | Type | Description |
+|:--------- |:----------:|:----:|:----------- |
+| `--play`        | `-p` | String | The screenplay file |
 
 ### Voice Index
 
-The _tts_ script requires, in the current folder, a file called `chars.txt`, which specifies which characters are to speak in what voice.  The file is comma-delimited, the name of the character and the name of the voice used by Festival.  Each line of the file should look something like...
+The _tts_ script requires, in the current folder, a file called `chars.txt`, which specifies which characters are to speak in what voice.  The file is comma-delimited, the name of the character and the name of the voice used by Mimic/Festival.  Each line of the file should look something like...
 
         GORDON,ked_diphone
 
