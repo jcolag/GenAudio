@@ -20,12 +20,14 @@ const optionDefinitions = [
   { name: 'style', alias: 'y', type: String },
   { name: 'seed', alias: 's', type: String, multiple: true },
   { name: 'time', alias: 't', type: Number },
+  { name: 'output', alias: 'o', type: String },
 ];
 const options = commandLineArgs(optionDefinitions);
 
 const style = options.hasOwnProperty('style') ? options.style[0] : 'g';
 const total_time = options.hasOwnProperty('time') ? options.time : 60;
 const seed = options.hasOwnProperty('seed') ? options.seed.join(' ') : '';
+var outfile = options.hasOwnProperty('output') ? options.output : 'output.wav';
 var current_notes = 0;
 var note_overlap = 15;
 var note_timeout = 300;
@@ -36,7 +38,7 @@ const startcode = '<CsShortLicense>\n\
 	</CsShortLicense>\n\
 	<CsoundSynthesizer>\n\
 	<CsOptions>\n\
-		-o outfile.wav\n\
+		-o ' + outfile + '\n\
 	</CsOptions>\n\
 	<CsInstruments>\n\
 		sr = 44100\n\
