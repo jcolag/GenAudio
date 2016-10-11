@@ -1,6 +1,9 @@
 #Backups
 *~
 festin.txt
+*.csd
+result.*
+output/
 
 #Audio Files
 *.wav
