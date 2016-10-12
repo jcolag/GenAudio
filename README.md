@@ -77,7 +77,7 @@ The above descriptions can seem a little scattered, so the entire process might 
 
  1. Write the screenplay.  For convenience, we'll refer to it `screenplay.fountain` in later steps.  Beyond what the [Fountain specification](http://fountain.io/syntax) says, there are a few additional points to remember for this purpose.
 
-   * Festival reads word-internal punctuation literally, so any punctuation such as an ellipsis representing a pause must be separated by spaces.  For example, `this ... will sound right`, but `this...won't` will result in a line-reading along the lines of "this dot dot dot won't."
+   * Mimic and Festival read word-internal punctuation literally, so any punctuation such as an ellipsis representing a pause must be separated by spaces.  For example, `this ... will sound right`, but `this...won't` will result in a line-reading along the lines of "this dot dot dot won't."
 
    * Referring to sound effects and music are noted in square brackets, on lines witn no dialogue, either by number or name.  Sounds that play alongside dialogue have the number/name followed by a tilde.  `[22]` will play play sound #22 alone, then continue with the remainder of the screenplay.  `[28~]` will play sound #28 in the background while the screenplay continues.
 
