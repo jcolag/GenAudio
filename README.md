@@ -51,6 +51,21 @@ The _Number_ and _Name_ (first and second columns) can be used interchangeably i
 
 The _scrcount_ script reads through a Fountain-formatted screenplay and counts the spoken words in each act, multiplying them by a semi-standard fudge factor (120) to arrive at an estimate of total time for the audio.  It takes one parameter, the screenplay file.
 
+Note that, if the screenplay is broken up into sections that use a top-level header such as...
+
+    # Act III
+
+...then the screenplay will be broken up into each section for counting purposes, producing output along the lines of the following:
+
+    Act I: 1168 / 09:44
+    Act II: 1043 / 08:42
+    Act III: 1370 / 11:25
+    Act IV: 1415 / 11:48
+
+Note that "spoken lines," here, include any physical line in the screenplay file that starts with a capital letter, a period (`.`), or a dash (`-`), and is followed by another period or dash, a space, or a lowercase letter.  This should exclude most markup like character directives, parenthesized directions, and so forth, while still including most dialogue.
+
+One unfortunate result is that stage direction can't generally start with a capital letter.
+
 ## `stats.sh`
 
 The _stats_ script goes through a folder of audio files (for example, the output of `tts.js`) and gathers statistics on each file contained inside:  The file type, sample rate, number of channels, number of samples, duration in seconds, bits per sample, and encoding.  It takes two parameters, the folder to search and the file to write the statistics to, with the filenames.
