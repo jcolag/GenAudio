@@ -78,6 +78,8 @@ The _tts_ script walks through a Fountain-formatted screenplay and uses Mimic to
 |:--------- |:----------:|:----:|:----------- |
 | `--play`        | `-p` | String | The screenplay file |
 
+The `tts.js` script uses the same rules for what represents a spoken line as `scrcount.sh`, described above.
+
 ### Voice Index
 
 The _tts_ script requires, in the current folder, a file called `chars.txt`, which specifies which characters are to speak in what voice.  The file is comma-delimited, the name of the character and the name of the voice used by Mimic/Festival.  Each line of the file should look something like...
