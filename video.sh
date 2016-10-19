@@ -21,7 +21,7 @@ linelen=100
 rr=$(rand --max 2)
 if [ $ht -ge $wd ]
 then
-  linelen=50
+  linelen=40
   if [ $rr -eq 0 ]
   then
     dir=east
@@ -31,7 +31,7 @@ then
     geo=+1180+200
   fi
 else
-  linelen=340
+  linelen=320
   if [ $rr -eq 0 ]
   then
     dir=north
