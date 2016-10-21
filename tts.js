@@ -3,6 +3,8 @@ const cp = require('child_process');
 const readline = require('readline');
 const commandLineArgs = require('command-line-args');
 
+const outDir = './output';
+
 const optionDefinitions = [
   { name: 'play', alias: 'p', type: String },
 ];
@@ -33,6 +35,9 @@ var lineReader = readline.createInterface({
   terminal: false,
   input: fs.createReadStream(filename)
 });
+if (!fs.existsSync(outDir)){
+    fs.mkdirSync(outDir);
+}
 lineReader.on('line', function (line) {
   if (line.length > 0 && (line[0] == '#' || line[0] == ' ')) {
     /* comment */;
@@ -51,8 +56,8 @@ lineReader.on('line', function (line) {
       && line.indexOf('(') != 0) {
     // Write out the line, then use Festival to create the audio
     line = line.replace(/_/g, '');
-    fs.writeFileSync(tempfile, line);
-    var outfile = './output/speech' + lineno + '.wav';
+    fs.writeFileSync(tempfile, line + '\n');
+    var outfile = outDir + '/speech' + lineno + '.wav';
     var v = voice;
     if (typeof voices[speaker] != 'undefined') {
       v = voices[speaker];
