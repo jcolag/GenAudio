@@ -35,6 +35,7 @@ var lineReader = readline.createInterface({
   terminal: false,
   input: fs.createReadStream(filename)
 });
+fs.unlink('whospeak.csv');
 if (!fs.existsSync(outDir)){
     fs.mkdirSync(outDir);
 }
@@ -63,14 +64,14 @@ lineReader.on('line', function (line) {
       v = voices[speaker];
     }
 
-    console.log(line);
-    console.log(v);
     console.log(outfile);
     var talk = cp.spawnSync('mimic',
       ['-o', outfile, '-voice', v, '-f', tempfile]);
     if (talk.stderr.toString().trim()) {
       console.log('>>> talk: ' + talk.stderr.toString().trim());
     }
+
+    fs.appendFileSync('whospeak.csv', lineno.toString() + ',' + speaker + '\n');
   }
   
   lineno += 1;                  // Next line
