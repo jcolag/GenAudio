@@ -4,6 +4,7 @@ festin.txt
 *.csd
 result.*
 output/
+clips/
 
 #Audio Files
 *.wav
