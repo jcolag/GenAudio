@@ -3,6 +3,10 @@ Experiments Using Audio Tools
 
 The included scripts are used to produce episodes of [Celestial Patrol](http://celestialpatrol.com), starting with a screenplay in a _slightly_ extended [Fountain](http://fountain.io/) format and, using mostly-standard Linux tools ([Mimic](https://mimic.mycroft.ai/) based on [Festival](http://www.cstr.ed.ac.uk/projects/festival/), [SoX](http://sox.sourceforge.net/), and [CSound](https://csound.github.io/)) and asset files, generates a final audio file.
 
+## `allvideo.js`
+
+Despite starting with an __a__, the _allvideo_ script leverages `video.js` (to avoid awkward threading conflicts) to iterate through the output of `tts.js` and a set of images to turn each line-reading into a video clip including an image representing the character speaking along with the text of the line.
+
 ## `cast.sh`
 
 The _cast_ script extracts the character names from a Fountain-formatted screenplay in order to associate text-to-speech voices.  It assumes that names are not punctuated (so that they're not confused with transition directives) and that the first "word" of each name is unique and relevant.
