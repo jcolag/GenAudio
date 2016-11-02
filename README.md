@@ -119,13 +119,13 @@ The above descriptions can seem a little scattered, so the entire process might 
 
    * The entire Fountain specification isn't quite supported, yet.  In particular, there isn't any recognition of lines that start with punctuation other than parentheses...out of laziness.
 
- 2. Create, download, edit, or otherwise acquire any sound effects and musical cues.  For a Free Culture work, good starting points might be [freesound](https://freesound.org/) or the [Free Music Archive](http://freemusicarchive.org/).  Place them all in the same folder and create `index.txt` in the same folder, as described under the __Sound Index__ section, above.
+ 1. Create, download, edit, or otherwise acquire any sound effects and musical cues.  For a Free Culture work, good starting points might be [freesound](https://freesound.org/) or the [Free Music Archive](http://freemusicarchive.org/).  Place them all in the same folder and create `index.txt` in the same folder, as described under the __Sound Index__ section, above.
  
    * If the existing ambient music generator is appropriate for the project, determine how long it should run (annotating with breaks for `scrcount.sh` should give a decent approximation, if no other means are usable) and feed that information into the music generation script, like `node genmusic.js --time 60 --outfile music.wav --seed Some music > music.csd`.  Running `csound music.csd` then takes the resulting CSound file called `music.csd` and renders it to sixty seconds of music in `music.wav`.
 
- 3. Convert the screenplay to line readings, with `node tts.js --play screenplay.fountain` at the command line.  If the `output` folder (inside the folder you run `tts.js` in) doesn't exist, it will be created.
+ 1. Convert the screenplay to line readings, with `node tts.js --play screenplay.fountain` at the command line.  If the `output` folder (inside the folder you run `tts.js` in) doesn't exist, it will be created.
 
- 4. Mix the episode, with `node mixep.js --play screenplay.fountain --soundfolder /path/to/sounds --destfolder ./output`.  The destination folder `destfolder` is the output folder from `tts.js`.
+ 1. Mix the episode, with `node mixep.js --play screenplay.fountain --soundfolder /path/to/sounds --destfolder ./output`.  The destination folder `destfolder` is the output folder from `tts.js`.
 
- 5. You now have `result.wav`.  It'll be big.  For transport, you may wish to run something like `sox result.wav result.flac` or replace `flac` with the audio format of your choice.
+ 1. You now have `result.wav`.  It'll be big.  For transport, you may wish to run something like `sox result.wav result.flac` or replace `flac` with the audio format of your choice.
 
