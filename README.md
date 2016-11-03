@@ -113,11 +113,13 @@ The above descriptions can seem a little scattered, so the entire process might 
 
  1. Write the screenplay.  For convenience, we'll refer to it `screenplay.fountain` in later steps.  Beyond what the [Fountain specification](http://fountain.io/syntax) says, there are a few additional points to remember for this purpose.
 
-   * Mimic and Festival read word-internal punctuation literally, so any punctuation such as an ellipsis representing a pause must be separated by spaces.  For example, `this ... will sound right`, but `this...won't` will result in a line-reading along the lines of "this dot dot dot won't."
+   * Mimic and Festival (sometimes) read word-internal punctuation literally, so any punctuation such as an ellipsis representing a pause must be separated by spaces.  For example, `this ... will sound right`, but `this...won't` will result in a line-reading along the lines of "this dot dot dot won't."
 
    * Referring to sound effects and music are noted in square brackets, on lines witn no dialogue, either by number or name.  Sounds that play alongside dialogue have the number/name followed by a tilde.  `[22]` will play play sound #22 alone, then continue with the remainder of the screenplay.  `[28~]` will play sound #28 in the background while the screenplay continues.
 
    * The entire Fountain specification isn't quite supported, yet.  In particular, there isn't any recognition of lines that start with punctuation other than parentheses...out of laziness.
+
+ 1. Generate a character index (`chars.txt`) with `sh cast.sh screenplay.fountain` and, for each line, add the path to the character's voice and image.
 
  1. Create, download, edit, or otherwise acquire any sound effects and musical cues.  For a Free Culture work, good starting points might be [freesound](https://freesound.org/) or the [Free Music Archive](http://freemusicarchive.org/).  Place them all in the same folder and create `index.txt` in the same folder, as described under the __Sound Index__ section, above.
  
