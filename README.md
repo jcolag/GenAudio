@@ -119,11 +119,11 @@ The above descriptions can seem a little scattered, so the entire process might 
 
    * The entire Fountain specification isn't quite supported, yet.  In particular, there isn't any recognition of lines that start with punctuation other than parentheses...out of laziness.
 
- 1. Generate a character index (`chars.txt`) with `sh cast.sh screenplay.fountain` and, for each line, add the path to the character's voice and image.
+ 1. Generate a character index (`chars.txt`) with `sh cast.sh screenplay.fountain` and edit each line to add the path to the relevant character's voice and image.
 
  1. Create, download, edit, or otherwise acquire any sound effects and musical cues.  For a Free Culture work, good starting points might be [freesound](https://freesound.org/) or the [Free Music Archive](http://freemusicarchive.org/).  Place them all in the same folder and create `index.txt` in the same folder, as described under the __Sound Index__ section, above.
  
-   * If the existing ambient music generator is appropriate for the project, determine how long it should run (annotating with breaks for `scrcount.sh` should give a decent approximation, if no other means are usable) and feed that information into the music generation script, like `node genmusic.js --time 60 --outfile music.wav --seed Some music > music.csd`.  Running `csound music.csd` then takes the resulting CSound file called `music.csd` and renders it to sixty seconds of music in `music.wav`.
+   * If (doubtfully) the existing ambient music generator is appropriate for the project, determine how long it should run (annotating with breaks for `scrcount.sh` should give a decent approximation, if no other means are usable) and feed that information into the music generation script, like `node genmusic.js --time 60 --outfile music.wav --seed Some music > music.csd`.  Running `csound music.csd` then takes the resulting CSound file called `music.csd` and renders it to sixty seconds of music in `music.wav`.
 
  1. Convert the screenplay to line readings, with `node tts.js --play screenplay.fountain` at the command line.  If the `output` folder (inside the folder you run `tts.js` in) doesn't exist, it will be created.
 
