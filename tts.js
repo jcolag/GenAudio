@@ -71,7 +71,7 @@ lineReader.on('line', function (line) {
       console.log('>>> talk: ' + talk.stderr.toString().trim());
     }
 
-    fs.appendFileSync('whospeak.csv', lineno.toString() + ',' + speaker + '\n');
+    fs.appendFileSync('whospeak.csv', lineno.toString() + ',' + line + '\n');
   }
   
   lineno += 1;                  // Next line
