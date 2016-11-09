@@ -70,7 +70,8 @@ lineReader.on('line', function (line) {
     	  var sound = fileNameFromCode(soundIndex, word);
     	  var dur = timeFromCode(soundIndex, word);
     	  var ext = sound.split('.').slice(-1);
-    	  var outName = 'speech' + lineno + '-' + wordno + '.' + ext;
+    	  var lcode = lineno + '-' + wordno;
+    	  var outName = 'speech' + lcode + '.' + ext;
     	  copyFile(soundFolder + '/' + sound, destFolder + outName);
     	  if (continuing) {
     	    backgroundSounds.push(outName);
