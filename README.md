@@ -1,7 +1,7 @@
 # GenAudio
 Experiments Using Audio Tools
 
-The included scripts are used to produce episodes of [Celestial Patrol](http://celestialpatrol.com), starting with a screenplay in a _slightly_ extended [Fountain](http://fountain.io/) format and, using mostly-standard Linux tools ([Mimic](https://mimic.mycroft.ai/) based on [Festival](http://www.cstr.ed.ac.uk/projects/festival/), [SoX](http://sox.sourceforge.net/), and [CSound](https://csound.github.io/)) and asset files, generates a final audio file.
+The included scripts are used to produce episodes of [Celestial Patrol](http://celestialpatrol.com), starting with a screenplay in a _slightly_ extended [Fountain](http://fountain.io/) format and, using mostly-standard Linux tools ([Mimic](https://mimic.mycroft.ai/) based on [Festival](http://www.cstr.ed.ac.uk/projects/festival/), [SoX](http://sox.sourceforge.net/), and [CSound](https://csound.github.io/)) and asset files, generates a final audio and video file.
 
 ## `allvideo.js`
 
