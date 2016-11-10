@@ -45,6 +45,7 @@ var lineReader = readline.createInterface({
   terminal: false,
   input: fs.createReadStream(script),
 });
+fs.unlink('soundeffects.csv');
 lineReader.on('line', function (line) {
   if (line.length == 0) {
     lineno += 1;
@@ -73,6 +74,7 @@ lineReader.on('line', function (line) {
     	  var lcode = lineno + '-' + wordno;
     	  var outName = 'speech' + lcode + '.' + ext;
     	  copyFile(soundFolder + '/' + sound, destFolder + outName);
+          fs.appendFileSync('soundeffects.csv', lcode.toString() + ',' + sound + '\n');
     	  if (continuing) {
     	    backgroundSounds.push(outName);
     	  }
