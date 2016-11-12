@@ -41,6 +41,8 @@ The _mixep_ script does the heavy lifting of sequencing and mixing, producing a 
 
 The output is `result.wav`, which can then be converted to any other format of relevance.
 
+The _mixep_ script also produces `soundeffects.csv`, which lists the line/position codes and sound effect files.
+
 ### Sound Index
 
 One of the extensions to Fountain required by this project is an annotation for music and sound effects.  This are a bracketed key, optionally followed by tilde.  That is, it might look like `[15]` or `[33~]`, with the latter indicating that the audio should be played alongside whatever else is in the screenplay.
