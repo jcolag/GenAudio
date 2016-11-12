@@ -29,7 +29,8 @@ voiceReader.on('line', function (line) {
   voices[mapping[0]] = mapping[1];
 });
 
-var speaker = '';               // Track who's speaking to change voices
+var fullname = '';              // Track who's speaking to change voices
+var speaker = '';
 var lineno = 1;                 // Count lines for easy addressing
 var lineReader = readline.createInterface({
   terminal: false,
@@ -49,7 +50,8 @@ lineReader.on('line', function (line) {
       && line.indexOf('PAN') != 0
       && line.indexOf('TRANSITION') != 0) {
       // Grab the person's unmodified name
-      speaker = line.split(' ')[0];
+      fullname = line;
+      speaker = fullname.split(' ')[0];
     } else {
       /* direction */;
     }
@@ -71,7 +73,7 @@ lineReader.on('line', function (line) {
       console.log('>>> talk: ' + talk.stderr.toString().trim());
     }
 
-    fs.appendFileSync('whospeak.csv', lineno.toString() + ',' + line + '\n');
+    fs.appendFileSync('whospeak.csv', lineno.toString() + ',' + fullname + ',' + line.replace(',', '|') + '\n');
   }
   
   lineno += 1;                  // Next line
