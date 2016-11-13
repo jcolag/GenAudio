@@ -44,7 +44,7 @@ var width = 0;
 var height = 0;
 var rSwitch = Math.round(Math.random());
 
-var speakIndex = fs.readFileSync(speakIndexName).toString().split('\n');
+var speakIndex = fs.readFileSync(speakIndexName).toString().replace('|', ',').split('\n');
 var charIndex = fs.readFileSync(charIndexName).toString().split('\n');
 
 im.identify(imageFile, function (err, features) {
