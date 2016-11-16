@@ -12,7 +12,14 @@ do
   # ...And the character, though it probably won't be used for these purposes
   speaker=$(echo $line | cut -f2 -d',')
   # ...And the image used for the character
-  image=$(grep "^$speaker," "$chars" | cut -f3 -d',')
+  found=$(grep -c "^$speaker," "$chars" | cut -f3 -d',')
+  if [ $found -eq 1 ]
+  then
+    image=$(grep "^$speaker," "$chars" | cut -f3 -d',')
+  else
+    tspeaker=$(echo $speaker | cut -f1 -d' ')
+    image=$(grep "^$tspeaker," "$chars" | cut -f3 -d',')
+  fi
   # Call the video conversion script with the right parameters
   # As far as I can tell, the JavaScript code runs asynchronously, making
   # it a disaster in a loop "locally."  This is, therefore, a stopgap.
