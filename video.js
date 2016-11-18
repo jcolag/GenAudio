@@ -11,6 +11,8 @@ const fullHeight = 1080;
 const outDir = 'clips';
 
 const optionDefinitions = [
+  { name: 'background', alias: 'b', type: String },
+  { name: 'color', alias: 'c', type: String },
   { name: 'font', alias: 'f', type: String },
   { name: 'image', alias: 'i', type: String },
   { name: 'line', alias: 'l', type: Number },
@@ -28,6 +30,8 @@ if (
   return;
 }
 
+var background = options.hasOwnProperty('background') ? options.background : 'lightgray';
+var foreground = options.hasOwnProperty('color') ? options.background : 'black';
 var fontFile = options.font;
 var imageFile = options.image;
 var lineNumber = options.line;
@@ -91,13 +95,13 @@ im.identify(imageFile, function (err, features) {
       imageFile,
       '-resize', fullWidth + 'x' + fullHeight,
       '-gravity', dir,
-      '-background', 'lightgray',
+      '-background', background,
       '-extent', fullWidth + 'x' + fullHeight,
       'resized_' + imageBaseName
     ], function (err, output) {
     im.convert([
       'resized_' + imageBaseName,
-      '-fill', 'black',
+      '-fill', foreground,
       '-font', fontFile,
       '-pointsize', 48,
       '-annotate', geo,
