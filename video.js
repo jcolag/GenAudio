@@ -31,7 +31,7 @@ if (
 }
 
 var background = options.hasOwnProperty('background') ? options.background : 'lightgray';
-var foreground = options.hasOwnProperty('color') ? options.background : 'black';
+var foreground = options.hasOwnProperty('color') ? options.color : 'black';
 var fontFile = options.font;
 var imageFile = options.image;
 var lineNumber = options.line;
@@ -96,9 +96,13 @@ im.identify(imageFile, function (err, features) {
       '-resize', fullWidth + 'x' + fullHeight,
       '-gravity', dir,
       '-background', background,
+      '-opaque', foreground,
       '-extent', fullWidth + 'x' + fullHeight,
       'resized_' + imageBaseName
     ], function (err, output) {
+    if (err) {
+      console.log(err);
+    }
     im.convert([
       'resized_' + imageBaseName,
       '-fill', foreground,
@@ -118,6 +122,8 @@ im.identify(imageFile, function (err, features) {
         videoName
       ]);
       fs.unlink('text_' + imageBaseName);
+      console.log(videoName);
+      console.log(audioName);
       cp.spawnSync('/usr/bin/ffmpeg', [
         '-i', videoName,
         '-i', audioName,
