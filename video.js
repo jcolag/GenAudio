@@ -38,6 +38,8 @@ var lineNumber = options.line;
 var playFile = options.play;
 var imageBaseName = imageFile.split('/').pop();
 var screenplay = fs.readFileSync(playFile).toString().split('\n');
+var lines = screenplay.length;
+var digits = lines.toString().length;
 screenplay.unshift('');
 
 var lineRead = screenplay[lineNumber];
@@ -60,7 +62,7 @@ im.identify(imageFile, function (err, features) {
   height = features.height;
   if (width > height) {
     var xScale = fullWidth / width;
-    linelen = Math.round((fullWidth - 200) / 16 - 1);
+    linelen = Math.round((fullWidth - 200) / 24 - 1);
     if (rSwitch == 1) {
       dir = 'South';
       geo = '+100+100';
@@ -70,7 +72,7 @@ im.identify(imageFile, function (err, features) {
     }
   } else {
     var yScale = fullHeight / height;
-    linelen = Math.round((fullWidth - width * yScale - 200) / 16 - 1);
+    linelen = Math.round((fullWidth - width * yScale - 200) / 24 - 1);
     if (rSwitch == 1) {
       dir = 'East';
       geo = '+100+100';
@@ -79,7 +81,7 @@ im.identify(imageFile, function (err, features) {
       geo = '+' + (100 + Math.round(width * yScale)) + '+100';
     }
   }
-  var words = lineRead.split(' ');
+  var words = lineRead.replace(/_/g, '').split(' ');
   var chars = 0;
   lineRead = '';
   for (var i = 0; i < words.length; i++) {
@@ -127,8 +129,7 @@ im.identify(imageFile, function (err, features) {
       cp.spawnSync('/usr/bin/ffmpeg', [
         '-i', videoName,
         '-i', audioName,
-        '-c', 'copy',
-        outDir + '/video' + lineNumber + '.mkv'
+        outDir + '/video' + ('00000' + lineNumber).slice(-digits) + '.mp4'
       ]);
       fs.unlink(videoName);
     });
