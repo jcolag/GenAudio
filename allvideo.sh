@@ -29,7 +29,7 @@ do
   # Call the video conversion script with the right parameters
   # As far as I can tell, the JavaScript code runs asynchronously, making
   # it a disaster in a loop "locally."  This is, therefore, a stopgap.
-  node video.js --background="$bg" --color="fg" --font="$2" --image="$image" --line=$num --play="$play"
+  node video.js --background="$bg" --color="$fg" --font="$2" --image="$image" --line=$num --play="$play"
   echo $num
 done < "$lines"
 echo $start
