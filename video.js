@@ -16,6 +16,7 @@ const optionDefinitions = [
   { name: 'font', alias: 'f', type: String },
   { name: 'image', alias: 'i', type: String },
   { name: 'line', alias: 'l', type: Number },
+  { name: 'novoice', alias: 'n', type: Boolean },
   { name: 'play', alias: 'p', type: String },
 ];
 const options = commandLineArgs(optionDefinitions);
@@ -36,6 +37,7 @@ var fontFile = options.font;
 var imageFile = options.image;
 var lineNumber = options.line;
 var playFile = options.play;
+var novoice = options.hasOwnProperty('novoice') ? options.novoice : false;
 var imageBaseName = imageFile.split('/').pop();
 var screenplay = fs.readFileSync(playFile).toString().split('\n');
 var lines = screenplay.length;
@@ -114,7 +116,7 @@ im.identify(imageFile, function (err, features) {
       lineRead,
       'text_' + imageBaseName
       ], function (err, output) {
-      var videoName = outDir + '/video' + lineNumber + '.mp4';
+      var videoName = outDir + '/video' + ('00000' + lineNumber).slice(-digits) + '.mp4';
       fs.unlink('resized_' + imageBaseName);
       cp.spawnSync('/usr/bin/ffmpeg', [
         '-framerate', '1/' + time,
@@ -124,14 +126,14 @@ im.identify(imageFile, function (err, features) {
         videoName
       ]);
       fs.unlink('text_' + imageBaseName);
-      console.log(videoName);
-      console.log(audioName);
-      cp.spawnSync('/usr/bin/ffmpeg', [
-        '-i', videoName,
-        '-i', audioName,
-        outDir + '/video' + ('00000' + lineNumber).slice(-digits) + '.mp4'
-      ]);
-      fs.unlink(videoName);
+      if (!novoice) {
+        cp.spawnSync('/usr/bin/ffmpeg', [
+          '-i', videoName,
+          '-i', audioName,
+          outDir + '/clip' + ('00000' + lineNumber).slice(-digits) + '.mp4'
+        ]);
+        fs.unlink(videoName);
+      }
     });
   });
 });
