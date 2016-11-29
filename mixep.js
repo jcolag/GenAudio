@@ -7,15 +7,17 @@ const commandLineArgs = require('command-line-args');
 const prefix = 'speech';
 const plen = prefix.length;
 const optionDefinitions = [
+  { name: 'bgonly', alias: 'b', type: Boolean },
+  { name: 'destfolder', alias: 'd', type: String },
   { name: 'play', alias: 'p', type: String },
   { name: 'soundfolder', alias: 's', type: String },
-  { name: 'destfolder', alias: 'd', type: String },
 ];
 const options = commandLineArgs(optionDefinitions);
 
 var script = options.play;
 var soundFolder = options.soundfolder;
 var destFolder = options.destfolder;
+var bgonly = options.hasOwnProperty('bgonly') ? options.bgonly : false;
 
 if (!options.hasOwnProperty('play')
    || !options.hasOwnProperty('soundfolder')
@@ -138,7 +140,7 @@ lineReader.on('line', function (line) {
         fs.unlinkSync(tmpDir.name + '/empty.wav');
       }
       console.log(file + ' offset by ' + timecode + ' seconds');
-    } else {
+    } else if (!bgonly) {
       var dur = parseFloat(timing.stdout.toString().trim(), 10);
       timecode += dur;
       var append = cp.spawnSync('/usr/bin/sox',
