@@ -35,9 +35,10 @@ The _mixep_ script does the heavy lifting of sequencing and mixing, producing a 
 
 | Long Name | Short Name | Type | Description |
 |:--------- |:----------:|:----:|:----------- |
-| `--play`        | `-p` | String | The screenplay file |
-| `--soundfolder` | `-s` | String | The folder containing the required sound effects and music |
-| `--destfolder`  | `-d` | String | The folder containing the voiced lines from `tts.js` |
+| `--bgonly`      | `-b` | Boolean | Only record background sounds |
+| `--play`        | `-p` | String  | The screenplay file |
+| `--soundfolder` | `-s` | String  | The folder containing the required sound effects and music |
+| `--destfolder`  | `-d` | String  | The folder containing the voiced lines from `tts.js` |
 
 The output is `result.wav`, which can then be converted to any other format of relevance.
 
