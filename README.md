@@ -105,10 +105,13 @@ The _video_ script combines the audio line reading with a representative image.
 
 | Long Name | Short Name | Type | Description |
 |:--------- |:----------:|:----:|:----------- |
-| `--font`  | `-f` | String | The font file |
-| `--image` | `-i` | String | The image file |
-| `--line`  | `-l` | Number | The line number |
-| `--play`  | `-p` | String | The screenplay file |
+| `--background` | `-b` | String | The background color for the clip |
+| `--color`      | `-c` | String | The text color for the clip |
+| `--font`       | `-f` | String | The font file |
+| `--image`      | `-i` | String | The image file |
+| `--line`       | `-l` | Number | The line number |
+| `--novoice`    | `-n` | Boolean | Option to record only background sounds |
+| `--play`       | `-p` | String | The screenplay file |
 
 Note that this script isn't intended to be run in isolation, but rather as part of a broader process.  Because the ImageMagick interface isn't meant to run synchronously, the algorithm doesn't work well inside a loop.
 
