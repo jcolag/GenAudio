@@ -110,7 +110,7 @@ The _video_ script combines the audio line reading with a representative image.
 | `--font`       | `-f` | String | The font file |
 | `--image`      | `-i` | String | The image file |
 | `--line`       | `-l` | Number | The line number |
-| `--novoice`    | `-n` | Boolean | Option to record only background sounds |
+| `--novoice`    | `-n` | Boolean | Option to skip combining with audio (for later combination) |
 | `--play`       | `-p` | String | The screenplay file |
 
 Note that this script isn't intended to be run in isolation, but rather as part of a broader process.  Because the ImageMagick interface isn't meant to run synchronously, the algorithm doesn't work well inside a loop.
