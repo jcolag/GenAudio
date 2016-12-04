@@ -4,6 +4,8 @@ const im = require('imagemagick');
 const readline = require('readline');
 const commandLineArgs = require('command-line-args');
 
+const fullWidth = 1920;
+const fullHeight = 1080;
 const outDir = './clips';
 
 const optionDefinitions = [
@@ -50,6 +52,32 @@ lineReader.on('line', function (line) {
 lineReader.on('close', function() {
   var pages = screens.length;
   var timePerPage = time / pages;
-  console.log('Runs for ' + time + 's, or ' + timePerPage + 's per page.');
-});
 
+  console.log('Runs for ' + time + 's, or ' + timePerPage + 's per page.');
+  for (var page = 0; page < pages; page++) {
+    var contents = screens[page].join('\n');
+    im.convert([
+        imageFile,
+        '-resize', fullWidth + 'x' + fullHeight,
+        '-gravity', 'Center',
+        '-background', '#000020',
+        '-opaque', '#F0F0B0',
+        '-extent', fullWidth + 'x' + fullHeight,
+        'resized_' + imageBaseName
+      ], function (err, output) {
+      if (err) {
+        console.log(err);
+      }
+      im.convert([
+        'resized_' + imageBaseName,
+        '-fill', foreground,
+        '-font', fontFile,
+        '-pointsize', 48,
+        '-annotate', geo,
+        contents,
+        'text_' + imageBaseName
+      ], function (err, output) {
+      }
+    });
+  });
+}
