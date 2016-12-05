@@ -52,10 +52,15 @@ lineReader.on('line', function (line) {
 lineReader.on('close', function() {
   var pages = screens.length;
   var timePerPage = time / pages;
+  var images = [];
 
   console.log('Runs for ' + time + 's, or ' + timePerPage + 's per page.');
   for (var page = 0; page < pages; page++) {
     var contents = screens[page].join('\n');
+    var digits = screens.toString().length;
+    var imageName = 'credit-' + ('0000' + (page + 1)).slice(-digits) + '.png';
+    
+    images.push(imageName);
     im.convert([
         imageFile,
         '-resize', fullWidth + 'x' + fullHeight,
@@ -63,7 +68,7 @@ lineReader.on('close', function() {
         '-background', '#000020',
         '-opaque', '#F0F0B0',
         '-extent', fullWidth + 'x' + fullHeight,
-        'resized_' + imageBaseName
+        imageName
       ], function (err, output) {
       if (err) {
         console.log(err);
@@ -75,7 +80,7 @@ lineReader.on('close', function() {
         '-pointsize', 48,
         '-annotate', geo,
         contents,
-        'text_' + imageBaseName
+        'text_' + imageName
       ], function (err, output) {
       }
     });
