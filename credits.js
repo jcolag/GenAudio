@@ -74,7 +74,7 @@ lineReader.on('close', function() {
         console.log(err);
       }
       im.convert([
-        'resized_' + imageBaseName,
+        imageName,
         '-fill', foreground,
         '-font', fontFile,
         '-pointsize', 48,
