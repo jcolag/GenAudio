@@ -58,31 +58,24 @@ lineReader.on('close', function() {
   for (var page = 0; page < pages; page++) {
     var contents = screens[page].join('\n');
     var digits = screens.toString().length;
-    var imageName = 'credit-' + ('0000' + (page + 1)).slice(-digits) + '.png';
+    var imageName = './credit-' + ('0000' + (page + 1)).slice(-digits) + '.png';
     
     images.push(imageName);
+    console.log(imageName);
+
     im.convert([
-        imageFile,
-        '-resize', fullWidth + 'x' + fullHeight,
-        '-gravity', 'Center',
-        '-background', '#000020',
-        '-opaque', '#F0F0B0',
-        '-extent', fullWidth + 'x' + fullHeight,
-        imageName
-      ], function (err, output) {
+      '-background', '#000020',
+      '-fill', '#F0F0B0',
+      '-font', font,
+      '-size', fullWidth + 'x' + fullHeight,
+      '-pointsize', 192,
+      '-gravity', 'Center',
+      'label:' + contents,
+      imageName
+    ], function (err, output) {
       if (err) {
         console.log(err);
       }
-      im.convert([
-        imageName,
-        '-fill', foreground,
-        '-font', fontFile,
-        '-pointsize', 48,
-        '-annotate', geo,
-        contents,
-        'text_' + imageName
-      ], function (err, output) {
-      }
     });
-  });
-}
+  }
+});
