@@ -34,13 +34,17 @@ if (!options.hasOwnProperty('font')
 
 var proc = cp.spawnSync('/usr/bin/soxi', [ '-D', music ]);
 var time = parseFloat(proc.stdout.toString().trim(), 10);
-
+var images = [];
+var finished = [];
+var pages = 1;
+var timePerPage = 1;
 var lineReader = readline.createInterface({
   terminal: false,
   input: fs.createReadStream(text)
 });
 var screens = [];
 var screenful = [];
+
 lineReader.on('line', function (line) {
   if (line == delimiter) {
     screens.push(screenful);
@@ -50,25 +54,23 @@ lineReader.on('line', function (line) {
   }
 });
 lineReader.on('close', function() {
-  var pages = screens.length;
-  var timePerPage = time / pages;
-  var images = [];
+  pages = screens.length;
+  timePerPage = time / pages;
 
   console.log('Runs for ' + time + 's, or ' + timePerPage + 's per page.');
+  setTimeout(videoFromImages, 100);
   for (var page = 0; page < pages; page++) {
     var contents = screens[page].join('\n');
     var digits = screens.toString().length;
     var imageName = './credit-' + ('0000' + (page + 1)).slice(-digits) + '.png';
     
     images.push(imageName);
-    console.log(imageName);
-
     im.convert([
       '-background', '#000020',
       '-fill', '#F0F0B0',
       '-font', font,
       '-size', fullWidth + 'x' + fullHeight,
-      '-pointsize', 192,
+      '-pointsize', fontsize,
       '-gravity', 'Center',
       'label:' + contents,
       imageName
@@ -76,6 +78,28 @@ lineReader.on('close', function() {
       if (err) {
         console.log(err);
       }
+      
+      finished.push(page);
     });
   }
 });
+
+function videoFromImages() {
+  if (images.length != finished.length) {
+    console.log(images.length + ' != ' + finished.length);
+    setTimeout(videoFromImages, 100);
+  } else {
+    cp.spawnSync('/usr/bin/ffmpeg', [
+      '-framerate', '1/' + timePerPage,
+      '-i', 'credit-%05d.png',
+      '-i', music,
+      '-c:v', 'libx264',
+      '-r', 30,
+      text + '.mp4'
+    ]);
+    for (var i = 0; i < images.length; i++) {
+      fs.unlink(images[i]);
+    }
+  }
+}
+
