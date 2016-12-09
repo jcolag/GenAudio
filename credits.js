@@ -72,7 +72,7 @@ lineReader.on('close', function() {
       '-size', fullWidth + 'x' + fullHeight,
       '-pointsize', fontsize,
       '-gravity', 'Center',
-      'label:' + contents,
+      'pango:' + contents,
       imageName
     ], function (err, output) {
       if (err) {
