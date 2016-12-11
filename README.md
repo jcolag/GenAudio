@@ -17,6 +17,10 @@ The result is a sorted list of names in `chars.txt`, with commas added to separa
 
 It takes the Fountain file as a parameter.
 
+## `credits.js`
+
+In progress...
+
 ## `genmusic.js`
 
 The _genmusic_ script uses trivially-guided random elements to generate musical scores in CSound format.  It takes up to three arguments, a time in seconds that the music should play, an optional parameter (which can be anything) to produce the simpler, harsher melodies, and a randomness seed.
