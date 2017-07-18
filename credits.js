@@ -18,6 +18,9 @@ const optionDefinitions = [
 ];
 const options = commandLineArgs(optionDefinitions);
 
+class TextBlock {
+}
+
 var delimiter = options.hasOwnProperty('delimiter') ? options.delimiter : '===';
 var font = options.font;
 var justify = options.hasOwnProperty('justify') ? options.justify : 'c';
