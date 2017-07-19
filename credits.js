@@ -19,6 +19,19 @@ const optionDefinitions = [
 const options = commandLineArgs(optionDefinitions);
 
 class TextBlock {
+  constructor(text, i, j, font, fontsize) {
+    this.text = text;
+    this.font = font;
+    this.fontsize = fontsize;
+    this.i = i;
+    this.j = j;
+    this.x = 0;
+    this.y = 0;
+    this.width = 0;
+    this.height = 0;
+    this.fillSize(text, font, fontsize);
+    console.log('(' + i + ', ' + j + ') ' + text);
+  }
 }
 
 var delimiter = options.hasOwnProperty('delimiter') ? options.delimiter : '===';
