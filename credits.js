@@ -32,6 +32,24 @@ class TextBlock {
     this.fillSize(text, font, fontsize);
     console.log('(' + i + ', ' + j + ') ' + text);
   }
+  
+  fillSize(text, font, fontsize) {
+    im.convert([
+      '-debug', 'annotate',
+      'xc:',
+      '-font', font,
+      '-pointsize', fontsize,
+      '-annotate', 0,
+      text, 'null:'
+    ], function (err, output) {
+      if (err) {
+        // In this case, stderr should have the output
+        console.log('ERR: ' + err + '\n');
+      } else {
+        console.log('OUT: ' + output + '\n');
+      }
+    });
+  }
 }
 
 var delimiter = options.hasOwnProperty('delimiter') ? options.delimiter : '===';
