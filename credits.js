@@ -97,6 +97,16 @@ lineReader.on('close', function() {
     var contents = screens[page].join('\n');
     var digits = screens.toString().length;
     var imageName = './credit-' + ('0000' + (page + 1)).slice(-digits) + '.png';
+    var blocks = [];
+    var lines = screens[page];
+    
+    for (var ll = 0; ll < lines.length; ll++) {
+      var fields = lines[ll].split('\t');
+
+      for (var ff = 0; ff < fields.length; ff++) {
+        blocks.push(new TextBlock(fields[ff], ll, ff, font, fontsize));
+      }
+    }
     
     images.push(imageName);
     im.convert([
