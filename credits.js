@@ -11,6 +11,7 @@ const outDir = './clips';
 const optionDefinitions = [
   { name: 'delimiter', alias: 'd', type: String },
   { name: 'font', alias: 'f', type: String },
+  { name: 'fontfamily', alias: 'a', type: String },
   { name: 'justify', alias: 'j', type: String },
   { name: 'music', alias: 'm', type: String },
   { name: 'size', alias: 's', type: Number },
@@ -54,12 +55,13 @@ class TextBlock {
 
 var delimiter = options.hasOwnProperty('delimiter') ? options.delimiter : '===';
 var font = options.font;
+var fontfamily = options.fontfamily;
 var justify = options.hasOwnProperty('justify') ? options.justify : 'c';
 var music = options.music;
 var fontsize = options.hasOwnProperty('size') ? options.size : '48';
 var text = options.text;
 
-if (!options.hasOwnProperty('font')
+if (!options.hasOwnProperty('fontfamily')
  || !options.hasOwnProperty('music')
  || !options.hasOwnProperty('text')) {
   // Can't do anything useful without input
@@ -116,7 +118,7 @@ lineReader.on('close', function() {
       '-size', fullWidth + 'x' + fullHeight,
       '-pointsize', fontsize,
       '-gravity', 'Center',
-      'pango:' + contents,
+      'pango:<span foreground=\'#F0F0B0\' font=\'' + fontfamily + '\'>' + contents + '</span>',
       imageName
     ], function (err, output) {
       if (err) {
