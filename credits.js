@@ -97,8 +97,7 @@ lineReader.on('close', function() {
   setTimeout(videoFromImages, 100);
   for (var page = 0; page < pages; page++) {
     var contents = screens[page].join('\n');
-    var digits = screens.toString().length;
-    var imageName = './credit-' + ('0000' + (page + 1)).slice(-digits) + '.png';
+    var imageName = './credit-' + ('0000' + (page + 1)).slice(-5) + '.png';
     var blocks = [];
     var lines = screens[page];
     
