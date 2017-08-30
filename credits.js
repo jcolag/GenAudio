@@ -46,7 +46,7 @@ class TextBlock {
       if (err) {
         // In this case, stderr should have the output
         console.log('ERR: ' + err + '\n');
-      } else {
+      } else if (output) {
         console.log('OUT: ' + output + '\n');
       }
     });
