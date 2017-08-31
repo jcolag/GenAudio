@@ -131,7 +131,7 @@ lineReader.on('close', function() {
 
 function videoFromImages() {
   if (images.length != finished.length) {
-    console.log(images.length + ' != ' + finished.length);
+    console.log('Waiting for image processing...');
     setTimeout(videoFromImages, 100);
   } else {
     cp.spawnSync('/usr/bin/ffmpeg', [
