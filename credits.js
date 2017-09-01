@@ -134,17 +134,21 @@ function videoFromImages() {
     console.log('Waiting for image processing...');
     setTimeout(videoFromImages, 100);
   } else {
-    cp.spawnSync('/usr/bin/ffmpeg', [
-      '-framerate', '1/' + timePerPage,
-      '-i', 'credit-%05d.png',
-      '-i', music,
-      '-c:v', 'libx264',
-      '-r', 30,
-      text + '.mp4'
-    ]);
-    for (var i = 0; i < images.length; i++) {
-      fs.unlink(images[i]);
-    }
+    var outfile = text + '.mp4';
+    fs.stat(outfile, function(err, stat) {
+      cp.spawnSync('/usr/bin/ffmpeg', [
+        '-framerate', 1 / timePerPage,
+        '-i', 'credit-%05d.png',
+        '-i', music,
+        '-c:v', 'libx264',
+        '-r', 30,
+        text + '.mp4'
+      ]);
+      console.log(x.stderr.toString());
+      for (var i = 0; i < images.length; i++) {
+        fs.unlink(images[i]);
+      }
+    });
   }
 }
 
