@@ -82,7 +82,7 @@ var screens = [];
 var screenful = [];
 
 lineReader.on('line', function (line) {
-  if (line == delimiter) {
+  if (line.startsWith(delimiter)) {
     screens.push(screenful);
     screenful = [];
   } else {
