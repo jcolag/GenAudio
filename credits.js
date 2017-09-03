@@ -136,6 +136,9 @@ function videoFromImages() {
   } else {
     var outfile = text + '.mp4';
     fs.stat(outfile, function(err, stat) {
+      if(err == null) {
+        fs.unlink(outfile);
+      }
       cp.spawnSync('/usr/bin/ffmpeg', [
         '-framerate', 1 / timePerPage,
         '-i', 'credit-%05d.png',
