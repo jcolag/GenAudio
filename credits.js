@@ -90,6 +90,14 @@ lineReader.on('line', function (line) {
   }
 });
 lineReader.on('close', function() {
+  setTimeout(foregroundImages, 100);
+});
+
+function foregroundImages() {
+  if (images.length != finished.length) {
+    console.log('Waiting for image processing (' + finished.length + ' of ' + images.length + ')...');
+    setTimeout(foregroundImages, 100);
+  } else {
   pages = screens.length;
   timePerPage = time / pages;
 
