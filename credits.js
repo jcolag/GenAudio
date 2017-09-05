@@ -151,8 +151,12 @@ function videoFromImages() {
         '-framerate', 1 / timePerPage,
         '-i', 'credit-%05d.png',
         '-i', music,
+        '-strict', '-2',
         '-c:v', 'libx264',
         '-r', 30,
+        '-shortest',
+        '-pix_fmt', 'yuv420p',
+        '-max_muxing_queue_size', '9999',
         text + '.mp4'
       ]);
       console.log(x.stderr.toString());
