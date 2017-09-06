@@ -13,6 +13,7 @@ const optionDefinitions = [
   { name: 'font', alias: 'f', type: String },
   { name: 'fontfamily', alias: 'a', type: String },
   { name: 'justify', alias: 'j', type: String },
+  { name: 'lines', alias: 'l', type: Number },
   { name: 'music', alias: 'm', type: String },
   { name: 'size', alias: 's', type: Number },
   { name: 'text', alias: 't', type: String },
@@ -57,6 +58,7 @@ var delimiter = options.hasOwnProperty('delimiter') ? options.delimiter : '===';
 var font = options.font;
 var fontfamily = options.fontfamily;
 var justify = options.hasOwnProperty('justify') ? options.justify : 'c';
+var nlines = options.hasOwnProperty('lines') ? options.lines : -1;
 var music = options.music;
 var fontsize = options.hasOwnProperty('size') ? options.size : '48';
 var text = options.text;
@@ -83,6 +85,15 @@ var screenful = [];
 
 lineReader.on('line', function (line) {
   if (line.startsWith(delimiter)) {
+    var length = screenful.length;
+    
+    if (length < nlines) {
+      var toAdd = Math.trunc((nlines - length) / 2);
+      for (var l = 0; l < toAdd; l++) {
+        screenful.unshift('');
+      }
+    }
+    
     screens.push(screenful);
     screenful = [];
   } else {
@@ -135,7 +146,8 @@ function foregroundImages() {
       finished.push(page);
     });
   }
-});
+  }
+}
 
 function videoFromImages() {
   if (images.length != finished.length) {
