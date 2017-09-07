@@ -12,6 +12,7 @@ const optionDefinitions = [
   { name: 'delimiter', alias: 'd', type: String },
   { name: 'font', alias: 'f', type: String },
   { name: 'fontfamily', alias: 'a', type: String },
+  { name: 'imagefolder', alias: 'i', type: String },
   { name: 'justify', alias: 'j', type: String },
   { name: 'lines', alias: 'l', type: Number },
   { name: 'music', alias: 'm', type: String },
@@ -62,6 +63,7 @@ var nlines = options.hasOwnProperty('lines') ? options.lines : -1;
 var music = options.music;
 var fontsize = options.hasOwnProperty('size') ? options.size : '48';
 var text = options.text;
+var imgfolder = options.hasOwnProperty('imagefolder') ? options.imagefolder : '';
 
 if (!options.hasOwnProperty('fontfamily')
  || !options.hasOwnProperty('music')
