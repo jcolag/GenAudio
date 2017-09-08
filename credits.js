@@ -88,6 +88,38 @@ var screenful = [];
 lineReader.on('line', function (line) {
   if (line.startsWith(delimiter)) {
     var length = screenful.length;
+    var reDelimiter = new RegExp('^' + delimiter, 'i');
+    var bgimage = line.replace(reDelimiter, '').trim();
+    var imageName = './bg-' + ('0000' + (screens.length + 1)).slice(-5) + '.png';
+    
+    images.push(imageName);
+    if (bgimage !== '') {
+      im.convert([
+        imgfolder + '/' + bgimage,
+        '-background', '#000030',
+        '-gravity', 'Center',
+        '-extent', fullWidth + 'x' + fullHeight,
+        imageName
+      ], function (err, output) {
+        if (err) {
+          console.log(err);
+        } else {
+          finished.push('bg' + screens.length);
+        }
+      });
+    } else {
+      im.convert([
+        '-size', fullWidth + 'x' + fullHeight,
+        'xc:#000030',
+        imageName
+      ], function (err, output) {
+        if (err) {
+          console.log(err);
+        } else {
+          finished.push('bg' + screens.length);
+        }
+      });
+    }
     
     if (length < nlines) {
       var toAdd = Math.trunc((nlines - length) / 2);
@@ -119,6 +151,7 @@ function foregroundImages() {
   for (var page = 0; page < pages; page++) {
     var contents = screens[page].join('\n');
     var imageName = './credit-' + ('0000' + (page + 1)).slice(-5) + '.png';
+    var bgImageName = './bg-' + ('0000' + (page + 1)).slice(-5) + '.png';
     var blocks = [];
     var lines = screens[page];
     
@@ -132,13 +165,15 @@ function foregroundImages() {
     
     images.push(imageName);
     im.convert([
-      '-background', '#000020',
+      '-page', '+0+0', bgImageName,
+      '-background', 'rgba(0,0,0,0)',
       '-fill', '#F0F0B0',
       '-font', font,
       '-size', fullWidth + 'x' + fullHeight,
       '-pointsize', fontsize,
       '-gravity', 'Center',
       'pango:<span foreground=\'#F0F0B0\' font=\'' + fontfamily + '\'>' + contents + '</span>',
+      '-layers', 'flatten',
       imageName
     ], function (err, output) {
       if (err) {
