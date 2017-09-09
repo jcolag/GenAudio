@@ -149,11 +149,11 @@ function foregroundImages() {
   console.log('Runs for ' + time + 's, or ' + timePerPage + 's per page.');
   setTimeout(videoFromImages, 100);
   for (var page = 0; page < pages; page++) {
-    var contents = screens[page].join('\n');
     var imageName = './credit-' + ('0000' + (page + 1)).slice(-5) + '.png';
     var bgImageName = './bg-' + ('0000' + (page + 1)).slice(-5) + '.png';
     var blocks = [];
     var lines = screens[page];
+    var contents = screens[page].join('\n');
     
     for (var ll = 0; ll < lines.length; ll++) {
       var fields = lines[ll].split('\t');
