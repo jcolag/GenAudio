@@ -33,7 +33,6 @@ class TextBlock {
     this.width = 0;
     this.height = 0;
     this.fillSize(text, font, fontsize);
-    console.log('(' + i + ', ' + j + ') ' + text);
   }
   
   fillSize(text, font, fontsize) {
@@ -208,7 +207,6 @@ function videoFromImages() {
         '-max_muxing_queue_size', '9999',
         text + '.mp4'
       ]);
-      console.log(x.stderr.toString());
       for (var i = 0; i < images.length; i++) {
         fs.unlink(images[i]);
       }
