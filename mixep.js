@@ -47,7 +47,11 @@ var lineReader = readline.createInterface({
   terminal: false,
   input: fs.createReadStream(script),
 });
-fs.unlink('soundeffects.csv');
+fs.stat('soundeffects.csv', function(err, stat) {
+  if (err != null) {
+    fs.unlink('soundeffects.csv');
+  }
+});
 lineReader.on('line', function (line) {
   if (line.length == 0) {
     lineno += 1;
