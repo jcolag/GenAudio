@@ -142,46 +142,46 @@ function foregroundImages() {
     console.log('Waiting for image processing (' + finished.length + ' of ' + images.length + ')...');
     setTimeout(foregroundImages, 100);
   } else {
-  pages = screens.length;
-  timePerPage = time / pages;
+    pages = screens.length;
+    timePerPage = time / pages;
 
-  console.log('Runs for ' + time + 's, or ' + timePerPage + 's per page.');
-  setTimeout(videoFromImages, 100);
-  for (var page = 0; page < pages; page++) {
-    var imageName = './credit-' + ('0000' + (page + 1)).slice(-5) + '.png';
-    var bgImageName = './bg-' + ('0000' + (page + 1)).slice(-5) + '.png';
-    var blocks = [];
-    var lines = screens[page];
-    var contents = screens[page].join('\n');
+    console.log('Runs for ' + time + 's, or ' + timePerPage + 's per page.');
+    setTimeout(videoFromImages, 100);
+    for (var page = 0; page < pages; page++) {
+      var imageName = './credit-' + ('0000' + (page + 1)).slice(-5) + '.png';
+      var bgImageName = './bg-' + ('0000' + (page + 1)).slice(-5) + '.png';
+      var blocks = [];
+      var lines = screens[page];
+      var contents = screens[page].join('\n');
     
-    for (var ll = 0; ll < lines.length; ll++) {
-      var fields = lines[ll].split('\t');
+      for (var ll = 0; ll < lines.length; ll++) {
+        var fields = lines[ll].split('\t');
 
-      for (var ff = 0; ff < fields.length; ff++) {
-        blocks.push(new TextBlock(fields[ff], ll, ff, font, fontsize));
+        for (var ff = 0; ff < fields.length; ff++) {
+          blocks.push(new TextBlock(fields[ff], ll, ff, font, fontsize));
+        }
       }
-    }
     
-    images.push(imageName);
-    im.convert([
-      '-page', '+0+0', bgImageName,
-      '-background', 'rgba(0,0,0,0)',
-      '-fill', '#F0F0B0',
-      '-font', font,
-      '-size', fullWidth + 'x' + fullHeight,
-      '-pointsize', fontsize,
-      '-gravity', 'Center',
-      'pango:<span foreground=\'#F0F0B0\' font=\'' + fontfamily + '\'>' + contents + '</span>',
-      '-layers', 'flatten',
-      imageName
-    ], function (err, output) {
-      if (err) {
-        console.log(err);
-      }
+      images.push(imageName);
+      im.convert([
+        '-page', '+0+0', bgImageName,
+        '-background', 'rgba(0,0,0,0)',
+        '-fill', '#F0F0B0',
+        '-font', font,
+        '-size', fullWidth + 'x' + fullHeight,
+        '-pointsize', fontsize,
+        '-gravity', 'Center',
+        'pango:<span foreground=\'#F0F0B0\' font=\'' + fontfamily + '\'>' + contents + '</span>',
+        '-layers', 'flatten',
+        imageName
+      ], function (err, output) {
+        if (err) {
+          console.log(err);
+        }
       
-      finished.push(page);
-    });
-  }
+        finished.push(page);
+      });
+    }
   }
 }
 
