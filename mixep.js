@@ -82,7 +82,7 @@ lineReader.on('line', function (line) {
     	  var lcode = lineno + '-' + wordno;
     	  var outName = 'speech' + lcode + '.' + ext;
     	  copyFile(soundFolder + '/' + sound, destFolder + outName);
-          fs.appendFileSync('soundeffects.csv', lcode.toString() + ',' + sound + '\n');
+          fs.appendFileSync('soundeffects.csv', lcode.toString() + ',' + word + ',' + sound + '\n');
     	  if (continuing) {
     	    backgroundSounds.push(outName);
     	  }
