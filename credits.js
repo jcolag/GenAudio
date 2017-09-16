@@ -187,7 +187,7 @@ function foregroundImages() {
 
 function videoFromImages() {
   if (images.length != finished.length) {
-    console.log('Waiting for image processing...');
+    console.log('Waiting for image processing (' + finished.length + ' of ' + images.length + ')...');
     setTimeout(videoFromImages, 100);
   } else {
     var outfile = text + '.mp4';
