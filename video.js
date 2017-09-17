@@ -116,7 +116,7 @@ im.identify(imageFile, function (err, features) {
       lineRead,
       'text_' + imageBaseName
       ], function (err, output) {
-      var videoName = outDir + '/video' + ('00000' + lineNumber).slice(-digits) + '.mp4';
+      var videoName = outDir + '/video' + ('00000' + lineNumber).slice(-5) + '.mp4';
       fs.unlink('resized_' + imageBaseName);
       cp.spawnSync('/usr/bin/ffmpeg', [
         '-framerate', '1/' + time,
