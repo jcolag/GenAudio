@@ -121,8 +121,10 @@ im.identify(imageFile, function (err, features) {
       cp.spawnSync('/usr/bin/ffmpeg', [
         '-framerate', '1/' + time,
         '-i', 'text_' + imageBaseName,
+        '-strict', '-2',
         '-c:v', 'libx264',
         '-r', '30',
+        '-pix_fmt', 'yuv420p',
         videoName
       ]);
       fs.unlink('text_' + imageBaseName);
