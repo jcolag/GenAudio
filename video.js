@@ -128,14 +128,6 @@ im.identify(imageFile, function (err, features) {
         videoName
       ]);
       fs.unlink('text_' + imageBaseName);
-      if (!novoice) {
-        cp.spawnSync('/usr/bin/ffmpeg', [
-          '-i', videoName,
-          '-i', audioName,
-          outDir + '/clip' + ('00000' + lineNumber).slice(-digits) + '.mp4'
-        ]);
-        fs.unlink(videoName);
-      }
     });
   });
 });
