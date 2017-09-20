@@ -152,7 +152,7 @@ function foregroundImages() {
       var bgImageName = './bg-' + ('0000' + (page + 1)).slice(-5) + '.png';
       var blocks = [];
       var lines = screens[page];
-      var contents = screens[page].join('\n');
+      var contents = lines.join('\n');
     
       for (var ll = 0; ll < lines.length; ll++) {
         var fields = lines[ll].split('\t');
