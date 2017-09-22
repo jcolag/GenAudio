@@ -32,6 +32,14 @@ do
   node video.js --background="$bg" --color="$fg" --font="$2" --image="$image" --line=$num --play="$play"
   echo $num
 done < "$lines"
+
+bg="#000030"
+while IFS=, read -r loc code audio
+do
+  img=$(grep "^${code}," sfx.csv | cut -f2 -d',')
+  node illustrate.js --linecode="$loc" --image="${img}" --background="${bg}"
+  echo $loc
+done < soundeffects.csv
 echo $start
 date
 
