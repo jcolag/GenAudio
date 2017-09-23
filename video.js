@@ -9,6 +9,7 @@ const charIndexName = 'chars.txt';
 const fullWidth = 1920;
 const fullHeight = 1080;
 const outDir = 'clips';
+const charPerLine = 30;
 
 const optionDefinitions = [
   { name: 'background', alias: 'b', type: String },
@@ -64,7 +65,7 @@ im.identify(imageFile, function (err, features) {
   height = features.height;
   if (width > height) {
     var xScale = fullWidth / width;
-    linelen = Math.round((fullWidth - 200) / 24 - 1);
+    linelen = Math.round((fullWidth - 200) / charPerLine);
     if (rSwitch == 1) {
       dir = 'South';
       geo = '+100+100';
@@ -74,7 +75,7 @@ im.identify(imageFile, function (err, features) {
     }
   } else {
     var yScale = fullHeight / height;
-    linelen = Math.round((fullWidth - width * yScale - 200) / 24 - 1);
+    linelen = Math.round((fullWidth - width * yScale - 200) / charPerLine);
     if (rSwitch == 1) {
       dir = 'East';
       geo = '+100+100';
