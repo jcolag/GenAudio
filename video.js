@@ -95,6 +95,10 @@ im.identify(imageFile, function (err, features) {
       lineRead += '\n';
     }
     lineRead += wd + ' ';
+    if (wd.length > linelen) {
+      chars = 0;
+      lineRead += '\n';
+    }
   }
   im.convert([
       imageFile,
