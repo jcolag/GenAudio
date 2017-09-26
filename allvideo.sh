@@ -6,6 +6,7 @@ chars=chars.txt
 colors=colors.csv
 start=$(date)
 
+rm -f clips.txt
 while read -r line
 do
   # Get the next line number
@@ -40,6 +41,8 @@ do
   node illustrate.js --linecode="$loc" --image="${img}" --background="${bg}"
   echo $loc
 done < soundeffects.csv
+
+/bin/ls -1 clips | sed "s/\(.*\)/file 'clips\/\1'/g" > clips.txt
 echo $start
 date
 
