@@ -5,6 +5,7 @@ lines=whospeak.csv
 chars=chars.txt
 colors=colors.csv
 start=$(date)
+outname=$(echo $play | cut -f2- -d'/' | cut -f1 -d'.')
 
 rm -f clips.txt
 while read -r line
@@ -43,6 +44,9 @@ do
 done < soundeffects.csv
 
 /bin/ls -1 clips | sed "s/\(.*\)/file 'clips\/\1'/g" > clips.txt
+ffmpeg -f concat -i clips.txt -c copy "v$outname.mp4"
+ffmpeg -i "v$outname.mp4" -i "$outname.wav" "$outname.mp4"
+rm -f "v$outname.mp4" "$outname.wav"
 echo $start
 date
 
