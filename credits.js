@@ -153,7 +153,11 @@ function foregroundImages() {
       var blocks = [];
       var lines = screens[page];
       var contents = lines.join('\n');
+      var imageNames = [];
     
+      if (nlines > 0) {
+      }
+      
       for (var ll = 0; ll < lines.length; ll++) {
         var fields = lines[ll].split('\t');
 
