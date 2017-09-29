@@ -156,6 +156,12 @@ function foregroundImages() {
       var imageNames = [];
     
       if (nlines > 0) {
+        var lineHeight = fullHeight / nlines;
+        
+        for (var l = 0; l < lines.length; l++) {
+          if (lines[l].startsWith('[')) {
+          }
+        }
       }
       
       for (var ll = 0; ll < lines.length; ll++) {
