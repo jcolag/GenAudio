@@ -166,6 +166,9 @@ function foregroundImages() {
             for (var ii = 0 ; ii < imagelist.length; ii++) {
               cmdConvert.push(imgfolder + '/' + imagelist[ii].slice(1, -1));
             }
+            
+            cmdConvert.push('+append');
+            cmdConvert.push('line-' + ('00' + l).slice(-2) + '.png');
           }
         }
       }
