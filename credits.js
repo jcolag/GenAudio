@@ -162,6 +162,7 @@ function foregroundImages() {
           if (lines[l].startsWith('[')) {
             var imagelist = lines[l].split(' ');
             var yoff = l * lineHeight;
+            var cmdConvert = [];
             
             for (var ii = 0 ; ii < imagelist.length; ii++) {
               cmdConvert.push(imgfolder + '/' + imagelist[ii].slice(1, -1));
