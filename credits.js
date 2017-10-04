@@ -170,6 +170,12 @@ function foregroundImages() {
             
             cmdConvert.push('+append');
             cmdConvert.push('line-' + ('00' + l).slice(-2) + '.png');
+
+            im.convert(cmdConvert, function(err, output) {
+              if (err) {
+                console.log(err);
+              }
+            });
           }
         }
       }
