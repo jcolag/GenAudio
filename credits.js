@@ -176,6 +176,8 @@ function foregroundImages() {
                 console.log(err);
               }
             });
+
+            lines[l] = '';
           }
         }
       }
