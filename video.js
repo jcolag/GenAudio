@@ -126,6 +126,7 @@ im.identify(imageFile, function (err, features) {
       cp.spawnSync('/usr/bin/ffmpeg', [
         '-framerate', '1/' + time,
         '-i', 'text_' + imageBaseName,
+        '-safe', '0',
         '-strict', '-2',
         '-c:v', 'libx264',
         '-r', '30',
