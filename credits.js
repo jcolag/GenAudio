@@ -227,6 +227,7 @@ function videoFromImages() {
         '-framerate', 1 / timePerPage,
         '-i', 'credit-%05d.png',
         '-i', music,
+        '-safe', '0',
         '-strict', '-2',
         '-c:v', 'libx264',
         '-r', 30,
