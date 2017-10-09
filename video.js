@@ -129,6 +129,11 @@ im.identify(imageFile, function (err, features) {
         '-safe', '0',
         '-strict', '-2',
         '-c:v', 'libx264',
+        '-b:a', '4.5M',
+        '-b:v', '4.5M',
+        '-minrate', '4.5M',
+        '-maxrate', '4.5M',
+        '-bufsize', '4.5M',
         '-r', '30',
         '-pix_fmt', 'yuv420p',
         videoName
