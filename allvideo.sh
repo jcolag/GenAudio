@@ -44,8 +44,8 @@ do
 done < soundeffects.csv
 
 /bin/ls -1 clips | sed "s/\(.*\)/file 'clips\/\1'/g" > clips.txt
-ffmpeg -f concat -i clips.txt -c copy "v$outname.mp4"
-ffmpeg -i "v$outname.mp4" -i "$outname.wav" "$outname.mp4"
+ffmpeg -f concat -i clips.txt -c copy -safe 0 -max_muxing_queue_size 9999 -strict -2 -b:a 4.5M -b:v 4.5M -minrate 4.5M -maxrate 4.5M -bufsize 4.5M "v$outname.mp4"
+ffmpeg -i "v$outname.mp4" -i "$outname.wav" -safe 0 -max_muxing_queue_size 9999 -strict -2 -b:a 4.5M -b:v 4.5M -minrate 4.5M -maxrate 4.5M -bufsize 4.5M "$outname.mp4"
 rm -f "v$outname.mp4" "$outname.wav"
 echo $start
 date
