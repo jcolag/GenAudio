@@ -238,6 +238,7 @@ function videoFromImages() {
         '-r', 30,
         '-shortest',
         '-pix_fmt', 'yuv420p',
+        '-af', 'aresample=async=1',
         '-max_muxing_queue_size', '9999',
         text + '.mp4'
       ]);
