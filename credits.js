@@ -92,33 +92,7 @@ lineReader.on('line', function (line) {
     var imageName = './bg-' + ('0000' + (screens.length + 1)).slice(-5) + '.png';
     
     images.push(imageName);
-    if (bgimage !== '') {
-      im.convert([
-        imgfolder + '/' + bgimage,
-        '-background', '#000030',
-        '-gravity', 'Center',
-        '-extent', fullWidth + 'x' + fullHeight,
-        imageName
-      ], function (err, output) {
-        if (err) {
-          console.log(err);
-        } else {
-          finished.push('bg' + screens.length);
-        }
-      });
-    } else {
-      im.convert([
-        '-size', fullWidth + 'x' + fullHeight,
-        'xc:#000030',
-        imageName
-      ], function (err, output) {
-        if (err) {
-          console.log(err);
-        } else {
-          finished.push('bg' + screens.length);
-        }
-      });
-    }
+    createBackgroundImage(imgfolder, bgimage, screens.length, imageName);
     
     if (length < nlines) {
       var toAdd = Math.trunc((nlines - length) / 2);
@@ -249,3 +223,32 @@ function videoFromImages() {
   }
 }
 
+function createBackgroundImage(imgfolder, bgimage, number, imageName) {
+    if (bgimage !== '') {
+      im.convert([
+        imgfolder + '/' + bgimage,
+        '-background', '#000030',
+        '-gravity', 'Center',
+        '-extent', fullWidth + 'x' + fullHeight,
+        imageName
+      ], function (err, output) {
+        if (err) {
+          console.log(err);
+        } else {
+          finished.push('bg' + number);
+        }
+      });
+    } else {
+      im.convert([
+        '-size', fullWidth + 'x' + fullHeight,
+        'xc:#000030',
+        imageName
+      ], function (err, output) {
+        if (err) {
+          console.log(err);
+        } else {
+          finished.push('bg' + number);
+        }
+      });
+    }
+}
