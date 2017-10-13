@@ -122,8 +122,9 @@ function foregroundImages() {
     console.log('Runs for ' + time + 's, or ' + timePerPage + 's per page.');
     setTimeout(videoFromImages, 100);
     for (var page = 0; page < pages; page++) {
-      var imageName = './credit-' + ('0000' + (page + 1)).slice(-5) + '.png';
-      var bgImageName = './bg-' + ('0000' + (page + 1)).slice(-5) + '.png';
+      var pageNumber = ('0000' + (page + 1)).slice(-5);
+      var imageName = './credit-' + pageNumber + '.png';
+      var bgImageName = './bg-' + pageNumber + '.png';
       var blocks = [];
       var lines = screens[page];
       var contents = lines.join('\n');
