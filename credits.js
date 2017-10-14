@@ -130,6 +130,7 @@ function foregroundImages() {
       var contents = lines.join('\n');
       var imageNames = [];
     
+      images.push(imageName);
       if (nlines > 0) {
         var lineHeight = fullHeight / nlines;
         
@@ -165,7 +166,6 @@ function foregroundImages() {
         }
       }
     
-      images.push(imageName);
       im.convert([
         '-page', '+0+0', bgImageName,
         '-background', 'rgba(0,0,0,0)',
