@@ -127,63 +127,10 @@ function foregroundImages() {
       var bgImageName = './bg-' + pageNumber + '.png';
       var blocks = [];
       var lines = screens[page];
-      var contents = lines.join('\n');
       var imageNames = [];
     
       images.push(imageName);
-      if (nlines > 0) {
-        var lineHeight = fullHeight / nlines;
-        
-        for (var l = 0; l < lines.length; l++) {
-          if (lines[l].startsWith('[')) {
-            var imagelist = lines[l].split(' ');
-            var yoff = l * lineHeight;
-            var cmdConvert = [];
-            
-            for (var ii = 0 ; ii < imagelist.length; ii++) {
-              cmdConvert.push(imgfolder + '/' + imagelist[ii].slice(1, -1));
-            }
-            
-            cmdConvert.push('+append');
-            cmdConvert.push('line-' + ('00' + l).slice(-2) + '.png');
-
-            im.convert(cmdConvert, function(err, output) {
-              if (err) {
-                console.log(err);
-              }
-            });
-
-            lines[l] = '';
-          }
-        }
-      }
-      
-      for (var ll = 0; ll < lines.length; ll++) {
-        var fields = lines[ll].split('\t');
-
-        for (var ff = 0; ff < fields.length; ff++) {
-          blocks.push(new TextBlock(fields[ff], ll, ff, font, fontsize));
-        }
-      }
-    
-      im.convert([
-        '-page', '+0+0', bgImageName,
-        '-background', 'rgba(0,0,0,0)',
-        '-fill', '#F0F0B0',
-        '-font', font,
-        '-size', fullWidth + 'x' + fullHeight,
-        '-pointsize', fontsize,
-        '-gravity', 'Center',
-        'pango:<span foreground=\'#F0F0B0\' font=\'' + fontfamily + '\'>' + contents + '</span>',
-        '-layers', 'flatten',
-        imageName
-      ], function (err, output) {
-        if (err) {
-          console.log(err);
-        }
-      
-        finished.push(page);
-      });
+      createPageImage(page, nlines, bgImageName, imageName, font, fontfamily, lines, blocks);
     }
   }
 }
@@ -252,4 +199,62 @@ function createBackgroundImage(imgfolder, bgimage, number, imageName) {
         }
       });
     }
+}
+
+function createPageImage(page, nlines, bgImageName, imageName, font, fontfamily, lines, blocks) {
+  var contents = lines.join('\n');
+
+  if (nlines > 0) {
+    var lineHeight = fullHeight / nlines;
+
+    for (var l = 0; l < lines.length; l++) {
+      if (lines[l].startsWith('[')) {
+        var imagelist = lines[l].split(' ');
+        var yoff = l * lineHeight;
+        var cmdConvert = [];
+
+        for (var ii = 0 ; ii < imagelist.length; ii++) {
+          cmdConvert.push(imgfolder + '/' + imagelist[ii].slice(1, -1));
+        }
+
+        cmdConvert.push('+append');
+        cmdConvert.push('line-' + ('00' + l).slice(-2) + '.png');
+
+        im.convert(cmdConvert, function(err, output) {
+          if (err) {
+            console.log(err);
+          }
+        });
+
+        lines[l] = '';
+      }
+    }
+  }
+
+  for (var ll = 0; ll < lines.length; ll++) {
+    var fields = lines[ll].split('\t');
+
+    for (var ff = 0; ff < fields.length; ff++) {
+      blocks.push(new TextBlock(fields[ff], ll, ff, font, fontsize));
+    }
+  }
+
+  im.convert([
+    '-page', '+0+0', bgImageName,
+    '-background', 'rgba(0,0,0,0)',
+    '-fill', '#F0F0B0',
+    '-font', font,
+    '-size', fullWidth + 'x' + fullHeight,
+    '-pointsize', fontsize,
+    '-gravity', 'Center',
+    'pango:<span foreground=\'#F0F0B0\' font=\'' + fontfamily + '\'>' + contents + '</span>',
+    '-layers', 'flatten',
+    imageName
+  ], function (err, output) {
+    if (err) {
+      console.log(err);
+    }
+
+    finished.push(page);
+  });
 }
