@@ -172,33 +172,33 @@ function videoFromImages() {
 }
 
 function createBackgroundImage(imgfolder, bgimage, number, imageName) {
-    if (bgimage !== '') {
-      im.convert([
-        imgfolder + '/' + bgimage,
-        '-background', '#000030',
-        '-gravity', 'Center',
-        '-extent', fullWidth + 'x' + fullHeight,
-        imageName
-      ], function (err, output) {
-        if (err) {
-          console.log(err);
-        } else {
-          finished.push('bg' + number);
-        }
-      });
-    } else {
-      im.convert([
-        '-size', fullWidth + 'x' + fullHeight,
-        'xc:#000030',
-        imageName
-      ], function (err, output) {
-        if (err) {
-          console.log(err);
-        } else {
-          finished.push('bg' + number);
-        }
-      });
-    }
+  if (bgimage !== '') {
+    im.convert([
+      imgfolder + '/' + bgimage,
+      '-background', '#000030',
+      '-gravity', 'Center',
+      '-extent', fullWidth + 'x' + fullHeight,
+      imageName
+    ], function (err, output) {
+      if (err) {
+        console.log(err);
+      } else {
+        finished.push('bg' + number);
+      }
+    });
+  } else {
+    im.convert([
+      '-size', fullWidth + 'x' + fullHeight,
+      'xc:#000030',
+      imageName
+    ], function (err, output) {
+      if (err) {
+        console.log(err);
+      } else {
+        finished.push('bg' + number);
+      }
+    });
+  }
 }
 
 function createPageImage(page, nlines, bgImageName, imageName, font, fontfamily, lines, blocks) {
