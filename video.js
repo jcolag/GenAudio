@@ -1,10 +1,7 @@
 const fs = require('fs');
 const cp = require('child_process');
 const im = require('imagemagick');
-const readline = require('readline');
 const commandLineArgs = require('command-line-args');
-const speakIndexName = 'whospeak.csv';
-const charIndexName = 'chars.txt';
 
 const fullWidth = 1920;
 const fullHeight = 1080;
@@ -17,7 +14,6 @@ const optionDefinitions = [
   { name: 'font', alias: 'f', type: String },
   { name: 'image', alias: 'i', type: String },
   { name: 'line', alias: 'l', type: Number },
-  { name: 'novoice', alias: 'n', type: Boolean },
   { name: 'play', alias: 'p', type: String },
 ];
 const options = commandLineArgs(optionDefinitions);
@@ -38,11 +34,8 @@ var fontFile = options.font;
 var imageFile = options.image;
 var lineNumber = options.line;
 var playFile = options.play;
-var novoice = options.hasOwnProperty('novoice') ? options.novoice : false;
 var imageBaseName = imageFile.split('/').pop();
 var screenplay = fs.readFileSync(playFile).toString().split('\n');
-var lines = screenplay.length;
-var digits = lines.toString().length;
 screenplay.unshift('');
 
 var lineRead = screenplay[lineNumber];
@@ -52,9 +45,6 @@ var time = parseFloat(proc.stdout.toString().trim(), 10);
 var width = 0;
 var height = 0;
 var rSwitch = Math.round(Math.random());
-
-var speakIndex = fs.readFileSync(speakIndexName).toString().replace('|', ',').split('\n');
-var charIndex = fs.readFileSync(charIndexName).toString().split('\n');
 
 im.identify(imageFile, function (err, features) {
   if (err) throw err;
