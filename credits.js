@@ -6,14 +6,12 @@ const commandLineArgs = require('command-line-args');
 
 const fullWidth = 1920;
 const fullHeight = 1080;
-const outDir = './clips';
 
 const optionDefinitions = [
   { name: 'delimiter', alias: 'd', type: String },
   { name: 'font', alias: 'f', type: String },
   { name: 'fontfamily', alias: 'a', type: String },
   { name: 'imagefolder', alias: 'i', type: String },
-  { name: 'justify', alias: 'j', type: String },
   { name: 'lines', alias: 'l', type: Number },
   { name: 'music', alias: 'm', type: String },
   { name: 'size', alias: 's', type: Number },
@@ -57,7 +55,6 @@ class TextBlock {
 var delimiter = options.hasOwnProperty('delimiter') ? options.delimiter : '===';
 var font = options.font;
 var fontfamily = options.fontfamily;
-var justify = options.hasOwnProperty('justify') ? options.justify : 'c';
 var nlines = options.hasOwnProperty('lines') ? options.lines : -1;
 var music = options.music;
 var fontsize = options.hasOwnProperty('size') ? options.size : '48';
@@ -127,7 +124,6 @@ function foregroundImages() {
       var bgImageName = './bg-' + pageNumber + '.png';
       var blocks = [];
       var lines = screens[page];
-      var imageNames = [];
     
       images.push(imageName);
       createPageImage(page, nlines, bgImageName, imageName, font, fontfamily, lines, blocks);
@@ -205,12 +201,10 @@ function createPageImage(page, nlines, bgImageName, imageName, font, fontfamily,
   var contents = lines.join('\n');
 
   if (nlines > 0) {
-    var lineHeight = fullHeight / nlines;
 
     for (var l = 0; l < lines.length; l++) {
       if (lines[l].startsWith('[')) {
         var imagelist = lines[l].split(' ');
-        var yoff = l * lineHeight;
         var cmdConvert = [];
 
         for (var ii = 0 ; ii < imagelist.length; ii++) {
