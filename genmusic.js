@@ -28,9 +28,6 @@ const style = options.hasOwnProperty('style') ? options.style[0] : 'g';
 const total_time = options.hasOwnProperty('time') ? options.time : 60;
 const seed = options.hasOwnProperty('seed') ? options.seed.join(' ') : '';
 var outfile = options.hasOwnProperty('output') ? options.output : 'output.wav';
-var current_notes = 0;
-var note_overlap = 15;
-var note_timeout = 300;
 var last_freq = 880;
 var last_time = 0;
 const startcode = '<CsShortLicense>\n\
@@ -94,7 +91,7 @@ if (style === 'g') {
   }
 } else {
   while (last_time < total_time) {
-    var size = Math.floor(Math.max(Math.sqrt(Math.random() * 1000) * 5, 3));
+    size = Math.floor(Math.max(Math.sqrt(Math.random() * 1000) * 5, 3));
     play_sound(size, 4, 1);
   }
 }
@@ -104,7 +101,6 @@ function play_sound(size, instrument, volume) {
   var max_pitch = 100.0;
   var log_used = 1.0715307808111486871978099;
   var halfnote = 1.09463094;
-  //var halfnote = 1.148698355; // Oversimplified pentatonic scale
   var pitch = 100 - Math.min(max_pitch, Math.log(size + log_used) / Math.log(log_used));
   var index = Math.floor(pitch / 100.0 * 27);
   var fuzz = Math.floor(Math.random() * 4) - 2;
