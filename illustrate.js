@@ -1,10 +1,7 @@
 const fs = require('fs');
 const cp = require('child_process');
 const im = require('imagemagick');
-const readline = require('readline');
 const commandLineArgs = require('command-line-args');
-const speakIndexName = 'whospeak.csv';
-const charIndexName = 'chars.txt';
 
 const fullWidth = 1920;
 const fullHeight = 1080;
@@ -55,15 +52,13 @@ var height = 0;
 
 im.identify(imageFile, function (err, features) {
   if (err) throw err;
-  var linelen = 100;
   var dir = 'Center';
-  var geo = '+100+100';
   width = features.width;
   height = features.height;
-  xoff = Math.trunc((fullWidth - width) / 2);
-  yoff = Math.trunc((fullHeight - height) / 2);
+  var xoff = Math.trunc((fullWidth - width) / 2);
+  var yoff = Math.trunc((fullHeight - height) / 2);
+  var geo = '+' + xoff + '+' + yoff;
   dir = 'North';
-  geo = '+' + xoff + '+' + yoff;
 
   im.convert([
       imageFile,
@@ -76,7 +71,7 @@ im.identify(imageFile, function (err, features) {
     if (err) {
       console.log(err);
     }
-    var mov = cp.spawnSync('/usr/bin/ffmpeg', [
+    cp.spawnSync('/usr/bin/ffmpeg', [
       '-framerate', frameRate,
       '-i', 'resized_' + imageBaseName,
       '-safe', '0',
