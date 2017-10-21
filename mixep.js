@@ -35,7 +35,6 @@ if (soundFolder.slice(-1) != '/') {
 }
 
 
-var files = fs.readdirSync(soundFolder);
 var indexName = soundFolder + '/index.txt';
 var soundIndex = fs.readFileSync(indexName).toString().split('\n');
 soundIndex.forEach(function (line, index, array) {
@@ -61,7 +60,7 @@ lineReader.on('line', function (line) {
   }
   var init = line[0];
   if (init == '(' || init == '#' || init.toUpperCase() != init) {
-    wordno = 1;
+    var wordno = 1;
     line.split(' ').forEach(function (word, index, array) {
     	if (word[0] == '[') {
     	  var continuing = false;
@@ -95,10 +94,11 @@ lineReader.on('line', function (line) {
   lineno += 1;
 }).on('close', function (err) {
   var timecode = 0.0;
-  var empty = cp.spawnSync('/usr/bin/rec', [ output, 'trim', 0, 0 ])
   var channels = 0;
   var brate = 0;
   var srate = 0;
+
+  cp.spawnSync('/usr/bin/rec', [ output, 'trim', 0, 0 ])
   fs.readdirSync(destFolder).forEach(function (file, index, array) {
     var proc = cp.spawnSync('/usr/bin/soxi', [ '-c', destFolder + file ]);
     var c = parseInt(proc.stdout.toString().trim(), 10);
@@ -120,12 +120,11 @@ lineReader.on('line', function (line) {
         background = true;
       }
     });
-    var normalize = cp.spawnSync('/usr/bin/sox',
+    cp.spawnSync('/usr/bin/sox',
       [ '--norm', destFolder + file, '--bits', brate, '--channels', channels,
         tmpDir.name + '/' + file, 'rate', '-v', '-s', srate ]);
     fs.renameSync(tmpDir.name + '/' + file, destFolder + file);
     var timing = cp.spawnSync('/usr/bin/soxi', [ '-D', destFolder + file ]);
-    var length = timing.stdout.toString().trim();
     if (timing.stderr.toString().trim() != '') {
       console.log(file);
       console.log(timing.stderr.toString().trim());
@@ -149,7 +148,7 @@ lineReader.on('line', function (line) {
     } else if (!bgonly) {
       var dur = parseFloat(timing.stdout.toString().trim(), 10);
       timecode += dur;
-      var append = cp.spawnSync('/usr/bin/sox',
+      cp.spawnSync('/usr/bin/sox',
         [ '--norm', output, destFolder + file, tmpDir.name + '/' + output ]);
       fs.renameSync(tmpDir.name + '/' + output, output);
       console.log(file + ' appended, total time at ' + timecode);
@@ -199,19 +198,6 @@ function fileNameFromCode(index, code) {
   index.forEach(function (item, index, array) {
     if (item[0] == code.toString() || item[1] == code) {
       out = item[4];
-    }
-  });
-  if (out == null) {
-    console.log(code);
-  }
-  return out;
-}
-
-function timeFromCode(index, code) {
-  var out = null;
-  index.forEach(function (item, index, array) {
-    if (item[0] == code.toString() || item[1] == code) {
-      out = item[3];
     }
   });
   if (out == null) {
