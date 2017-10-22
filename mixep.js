@@ -62,31 +62,30 @@ lineReader.on('line', function (line) {
   if (init == '(' || init == '#' || init.toUpperCase() != init) {
     var wordno = 1;
     line.split(' ').forEach(function (word, index, array) {
-    	if (word[0] == '[') {
-    	  var continuing = false;
-    	  if (word.slice(-1) == ','
-    	   || word.slice(-1) == ';'
-    	   || word.slice(-1) == '.'
-    	   || word.slice(-1) == ')') {
-    	    word = word.slice(0, -1);
-    	  }
-    	  word = word.slice(1, -1);
-    	  if (word.slice(-1) == '~') {
-    	    continuing = true;
-    	    word = word.slice(0, -1);
-    	  }
-    	  var sound = fileNameFromCode(soundIndex, word);
-    	  var dur = timeFromCode(soundIndex, word);
-    	  var ext = sound.split('.').slice(-1);
-    	  var lcode = lineno + '-' + wordno;
-    	  var outName = 'speech' + lcode + '.' + ext;
-    	  copyFile(soundFolder + '/' + sound, destFolder + outName);
+      if (word[0] == '[') {
+        var continuing = false;
+        if (word.slice(-1) == ','
+         || word.slice(-1) == ';'
+         || word.slice(-1) == '.'
+         || word.slice(-1) == ')') {
+          word = word.slice(0, -1);
+        }
+        word = word.slice(1, -1);
+        if (word.slice(-1) == '~') {
+          continuing = true;
+          word = word.slice(0, -1);
+        }
+        var sound = fileNameFromCode(soundIndex, word);
+        var ext = sound.split('.').slice(-1);
+        var lcode = lineno + '-' + wordno;
+        var outName = 'speech' + lcode + '.' + ext;
+        copyFile(soundFolder + '/' + sound, destFolder + outName);
           fs.appendFileSync('soundeffects.csv', lcode.toString() + ',' + word + ',' + sound + '\n');
-    	  if (continuing) {
-    	    backgroundSounds.push(outName);
-    	  }
-    	}
-    	wordno += 1;
+        if (continuing) {
+          backgroundSounds.push(outName);
+        }
+      }
+      wordno += 1;
     });
   } else if (line.slice(-1) == '^') {
     backgroundSounds.push('speech' + (lineno - 2) + '.wav');
@@ -174,23 +173,23 @@ lineReader.on('line', function (line) {
 });
 
 function audioFileSort(a, b) {
-	var aNames = a.slice(plen).split('-');
-	var bNames = b.slice(plen).split('-');
-	aNames.forEach(function (n, i, a) { aNames[i] = parseInt(n, 10); });
-	bNames.forEach(function (n, i, a) { bNames[i] = parseInt(n, 10); });
-	if (aNames[0] > bNames[0]) {
-		return 1;
-	} else if (aNames[0] < bNames[0]) {
-		return -1;
-	} else if (aNames.length == 1) {
-		return 0;
-	} else if (aNames[1] > bNames[1]) {
-		return 1;
-	} else if (aNames[1] < bNames[1]) {
-		return -1;
-	} else {
-		return 0;
-	}
+  var aNames = a.slice(plen).split('-');
+  var bNames = b.slice(plen).split('-');
+  aNames.forEach(function (n, i, a) { aNames[i] = parseInt(n, 10); });
+  bNames.forEach(function (n, i, a) { bNames[i] = parseInt(n, 10); });
+  if (aNames[0] > bNames[0]) {
+    return 1;
+  } else if (aNames[0] < bNames[0]) {
+    return -1;
+  } else if (aNames.length == 1) {
+    return 0;
+  } else if (aNames[1] > bNames[1]) {
+    return 1;
+  } else if (aNames[1] < bNames[1]) {
+    return -1;
+  } else {
+    return 0;
+  }
 }
 
 function fileNameFromCode(index, code) {
