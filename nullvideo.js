@@ -1,7 +1,5 @@
-const fs = require('fs');
 const cp = require('child_process');
 const im = require('imagemagick');
-const readline = require('readline');
 const commandLineArgs = require('command-line-args');
 
 const fullWidth = 1920;
@@ -33,7 +31,7 @@ im.convert([
     console.log(err);
   }
 
-  var mov = cp.spawnSync('/usr/bin/ffmpeg', [
+  cp.spawnSync('/usr/bin/ffmpeg', [
     '-framerate', framerate,
     '-i', imageName,
     '-i', soundName,
