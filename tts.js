@@ -42,7 +42,8 @@ if (!fs.existsSync(outDir)){
 }
 lineReader.on('line', function (line) {
   if (line.length > 0 && (line[0] == '#' || line[0] == ' ')) {
-    /* comment */;
+
+    /* comment */
   } else if (line == line.toUpperCase()) {
     if (line.indexOf('EXT.') != 0
       && line.indexOf('INT.') != 0
@@ -53,7 +54,8 @@ lineReader.on('line', function (line) {
       fullname = line;
       speaker = fullname.split(' ')[0];
     } else {
-      /* direction */;
+
+      /* direction */
     }
   } else if (line[0] == line[0].toUpperCase()
       && line.indexOf('(') != 0) {
