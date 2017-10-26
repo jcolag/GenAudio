@@ -19,39 +19,6 @@ const optionDefinitions = [
 ];
 const options = commandLineArgs(optionDefinitions);
 
-class TextBlock {
-  constructor(text, i, j, font, fontsize) {
-    this.text = text;
-    this.font = font;
-    this.fontsize = fontsize;
-    this.i = i;
-    this.j = j;
-    this.x = 0;
-    this.y = 0;
-    this.width = 0;
-    this.height = 0;
-    this.fillSize(text, font, fontsize);
-  }
-  
-  fillSize(text, font, fontsize) {
-    im.convert([
-      '-debug', 'annotate',
-      'xc:',
-      '-font', font,
-      '-pointsize', fontsize,
-      '-annotate', 0,
-      text, 'null:'
-    ], function (err, output) {
-      if (err) {
-        // In this case, stderr should have the output
-        console.log('ERR: ' + err + '\n');
-      } else if (output) {
-        console.log('OUT: ' + output + '\n');
-      }
-    });
-  }
-}
-
 var delimiter = options.hasOwnProperty('delimiter') ? options.delimiter : '===';
 var font = options.font;
 var fontfamily = options.fontfamily;
@@ -122,11 +89,10 @@ function foregroundImages() {
       var pageNumber = ('0000' + (page + 1)).slice(-5);
       var imageName = './credit-' + pageNumber + '.png';
       var bgImageName = './bg-' + pageNumber + '.png';
-      var blocks = [];
       var lines = screens[page];
     
       images.push(imageName);
-      createPageImage(page, nlines, bgImageName, imageName, font, fontfamily, lines, blocks);
+      createPageImage(page, nlines, bgImageName, imageName, font, fontfamily, lines);
     }
   }
 }
@@ -197,7 +163,7 @@ function createBackgroundImage(imgfolder, bgimage, number, imageName) {
   }
 }
 
-function createPageImage(page, nlines, bgImageName, imageName, font, fontfamily, lines, blocks) {
+function createPageImage(page, nlines, bgImageName, imageName, font, fontfamily, lines) {
   var contents = lines.join('\n');
 
   if (nlines > 0) {
@@ -224,14 +190,6 @@ function createPageImage(page, nlines, bgImageName, imageName, font, fontfamily,
 
         lines[l] = '';
       }
-    }
-  }
-
-  for (var ll = 0; ll < lines.length; ll++) {
-    var fields = lines[ll].split('\t');
-
-    for (var ff = 0; ff < fields.length; ff++) {
-      blocks.push(new TextBlock(fields[ff], ll, ff, font, fontsize));
     }
   }
 
