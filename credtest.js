@@ -9,7 +9,6 @@ const fullHeight = 1080;
 
 const optionDefinitions = [
   { name: 'delimiter', alias: 'd', type: String },
-  { name: 'font', alias: 'f', type: String },
   { name: 'fontfamily', alias: 'a', type: String },
   { name: 'imagefolder', alias: 'i', type: String },
   { name: 'lines', alias: 'l', type: Number },
@@ -20,7 +19,6 @@ const optionDefinitions = [
 const options = commandLineArgs(optionDefinitions);
 
 var delimiter = options.hasOwnProperty('delimiter') ? options.delimiter : '===';
-var font = options.font;
 var fontfamily = options.fontfamily;
 var nlines = options.hasOwnProperty('lines') ? options.lines : -1;
 var music = options.music;
@@ -92,7 +90,7 @@ function foregroundImages() {
       var lines = screens[page];
     
       images.push(imageName);
-      createPageImage(page, nlines, bgImageName, imageName, font, fontfamily, lines);
+      createPageImage(page, nlines, bgImageName, imageName, fontfamily, lines);
     }
   }
 }
@@ -163,16 +161,13 @@ function createBackgroundImage(imgfolder, bgimage, number, imageName) {
   }
 }
 
-function createPageImage(page, nlines, bgImageName, imageName, font, fontfamily, lines) {
+function createPageImage(page, nlines, bgImageName, imageName, fontfamily, lines) {
   var contents = lines.join('\n');
 
   if (nlines > 0) {
-    //var lineHeight = fullHeight / nlines;
-
     for (var l = 0; l < lines.length; l++) {
       if (lines[l].startsWith('[')) {
         var imagelist = lines[l].split(' ');
-        //var yoff = l * lineHeight;
         var cmdConvert = [];
 
         for (var ii = 0 ; ii < imagelist.length; ii++) {
@@ -197,11 +192,10 @@ function createPageImage(page, nlines, bgImageName, imageName, font, fontfamily,
     '-page', '+0+0', bgImageName,
     '-background', 'rgba(0,0,0,0)',
     '-fill', '#F0F0B0',
-    '-font', font,
     '-size', fullWidth + 'x' + fullHeight,
     '-pointsize', fontsize,
     '-gravity', 'Center',
-    'pango:<span foreground=\'#F0F0B0\' font=\'' + fontfamily + '\'>' + contents + '</span>',
+    'pango:<span foreground=\'#F0F0B0\' fontfamily + '\'>' + contents + '</span>',
     '-layers', 'flatten',
     imageName
   ], function (err, output) {
