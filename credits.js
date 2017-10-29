@@ -154,10 +154,10 @@ function videoFromImages() {
         '-maxrate', '4.5M',
         '-bufsize', '4.5M',
         '-r', 30,
-        '-shortest',
         '-pix_fmt', 'yuv420p',
         '-af', 'aresample=async=1',
         '-max_muxing_queue_size', '9999',
+        '-shortest',
         text + '.mp4'
       ]);
       for (var i = 0; i < images.length; i++) {
