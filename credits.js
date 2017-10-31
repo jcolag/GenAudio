@@ -207,6 +207,7 @@ function createPageImage(page, nlines, bgImageName, imageName, font, fontfamily,
     for (var l = 0; l < lines.length; l++) {
       if (lines[l].startsWith('[')) {
         var imagelist = lines[l].split(' ');
+        var internalName = 'line-' + ('00' + l).slice(-2) + '.png';
         var cmdConvert = [];
 
         for (var ii = 0 ; ii < imagelist.length; ii++) {
@@ -215,11 +216,15 @@ function createPageImage(page, nlines, bgImageName, imageName, font, fontfamily,
 
         cmdConvert.push('+append');
         cmdConvert.push('line-' + ('00' + l).slice(-2) + '.png');
+        cmdConvert.push(internalName);
+        internalImages.push(internalName);
 
         im.convert(cmdConvert, function(err, output) {
           if (err) {
             console.log(err);
           }
+          
+          internalFinished.push(internalName);
         });
 
         lines[l] = '';
