@@ -202,6 +202,8 @@ function createBackgroundImage(imgfolder, bgimage, number, imageName) {
 function createPageImage(page, nlines, bgImageName, imageName, font, fontfamily, lines, blocks) {
   var contents = lines.join('\n');
 
+  internalImages = [];
+  internalFinished = [];
   if (nlines > 0) {
 
     for (var l = 0; l < lines.length; l++) {
@@ -215,7 +217,6 @@ function createPageImage(page, nlines, bgImageName, imageName, font, fontfamily,
         }
 
         cmdConvert.push('+append');
-        cmdConvert.push('line-' + ('00' + l).slice(-2) + '.png');
         cmdConvert.push(internalName);
         internalImages.push(internalName);
 
