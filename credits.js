@@ -233,6 +233,10 @@ function createPageImage(page, nlines, bgImageName, imageName, font, fontfamily,
     }
   }
 
+  completePageImage(page, nlines, bgImageName, imageName, font, fontfamily, lines, blocks);
+}
+
+function completePageImage(page, nlines, bgImageName, imageName, font, fontfamily, lines, blocks) {
   for (var ll = 0; ll < lines.length; ll++) {
     var fields = lines[ll].split('\t');
 
