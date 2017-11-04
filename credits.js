@@ -233,10 +233,6 @@ function createPageImage(page, nlines, bgImageName, imageName, font, fontfamily,
     }
   }
 
-  completePageImage(page, bgImageName, imageName, font, fontfamily, lines, blocks);
-}
-
-function completePageImage(page, bgImageName, imageName, font, fontfamily, lines, blocks) {
   for (var ll = 0; ll < lines.length; ll++) {
     var fields = lines[ll].split('\t');
 
@@ -245,6 +241,10 @@ function completePageImage(page, bgImageName, imageName, font, fontfamily, lines
     }
   }
 
+  completePageImage(page, bgImageName, imageName, font, fontfamily);
+}
+
+function completePageImage(page, bgImageName, imageName, font, fontfamily) {
   im.convert([
     '-page', '+0+0', bgImageName,
     '-background', 'rgba(0,0,0,0)',
