@@ -232,7 +232,13 @@ function createPageImage(page, nlines, bgImageName, imageName, font, fontfamily,
       }
     }
   }
+  
+  fillBlocks(blocks, lines, font, fontsize);
 
+  completePageImage(page, bgImageName, imageName, font, fontfamily);
+}
+
+function fillBlocks(blocks, lines, font, fontsize) {
   for (var ll = 0; ll < lines.length; ll++) {
     var fields = lines[ll].split('\t');
 
@@ -240,8 +246,6 @@ function createPageImage(page, nlines, bgImageName, imageName, font, fontfamily,
       blocks.push(new TextBlock(fields[ff], ll, ff, font, fontsize));
     }
   }
-
-  completePageImage(page, bgImageName, imageName, font, fontfamily);
 }
 
 function completePageImage(page, bgImageName, imageName, font, fontfamily) {
