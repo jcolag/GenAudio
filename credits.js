@@ -235,7 +235,7 @@ function createPageImage(page, nlines, bgImageName, imageName, font, fontfamily,
   
   fillBlocks(blocks, lines, font, fontsize);
 
-  completePageImage(page, bgImageName, imageName, font, fontfamily);
+  completePageImage(page, bgImageName, imageName, font, fontfamily, contents);
 }
 
 function fillBlocks(blocks, lines, font, fontsize) {
@@ -248,7 +248,7 @@ function fillBlocks(blocks, lines, font, fontsize) {
   }
 }
 
-function completePageImage(page, bgImageName, imageName, font, fontfamily) {
+function completePageImage(page, bgImageName, imageName, font, fontfamily, contents) {
   im.convert([
     '-page', '+0+0', bgImageName,
     '-background', 'rgba(0,0,0,0)',
