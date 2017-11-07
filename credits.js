@@ -234,8 +234,7 @@ function createPageImage(page, nlines, bgImageName, imageName, font, fontfamily,
   }
   
   fillBlocks(blocks, lines, font, fontsize);
-
-  completePageImage(page, bgImageName, imageName, font, fontfamily, contents);
+  setTimeout(completePageImage, 100, page, bgImageName, imageName, font, fontfamily, contents, internalImages, internalFinished);
 }
 
 function fillBlocks(blocks, lines, font, fontsize) {
@@ -248,7 +247,7 @@ function fillBlocks(blocks, lines, font, fontsize) {
   }
 }
 
-function completePageImage(page, bgImageName, imageName, font, fontfamily, contents) {
+function completePageImage(page, bgImageName, imageName, font, fontfamily, contents, images, finished) {
   im.convert([
     '-page', '+0+0', bgImageName,
     '-background', 'rgba(0,0,0,0)',
