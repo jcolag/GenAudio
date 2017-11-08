@@ -248,22 +248,27 @@ function fillBlocks(blocks, lines, font, fontsize) {
 }
 
 function completePageImage(page, bgImageName, imageName, font, fontfamily, contents, images, finished) {
-  im.convert([
-    '-page', '+0+0', bgImageName,
-    '-background', 'rgba(0,0,0,0)',
-    '-fill', '#F0F0B0',
-    '-font', font,
-    '-size', fullWidth + 'x' + fullHeight,
-    '-pointsize', fontsize,
-    '-gravity', 'Center',
-    'pango:<span foreground=\'#F0F0B0\' font=\'' + fontfamily + '\'>' + contents + '</span>',
-    '-layers', 'flatten',
-    imageName
-  ], function (err, output) {
-    if (err) {
-      console.log(err);
-    }
+  if (images.length != finished.length) {
+    console.log('Internal not done: ' + images.length + ' vs. ' + finished.length + '. Skipping...');
+    setTimeout(completePageImage, 100, page, bgImageName, imageName, font, fontfamily, contents, images, finished);
+  } else {
+    im.convert([
+      '-page', '+0+0', bgImageName,
+      '-background', 'rgba(0,0,0,0)',
+      '-fill', '#F0F0B0',
+      '-font', font,
+      '-size', fullWidth + 'x' + fullHeight,
+      '-pointsize', fontsize,
+      '-gravity', 'Center',
+      'pango:<span foreground=\'#F0F0B0\' font=\'' + fontfamily + '\'>' + contents + '</span>',
+      '-layers', 'flatten',
+      imageName
+    ], function (err, output) {
+      if (err) {
+        console.log(err);
+      }
 
-    finished.push(page);
-  });
+      finished.push(page);
+    });
+  }
 }
