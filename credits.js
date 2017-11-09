@@ -247,10 +247,10 @@ function fillBlocks(blocks, lines, font, fontsize) {
   }
 }
 
-function completePageImage(page, bgImageName, imageName, font, fontfamily, contents, images, finished) {
-  if (images.length != finished.length) {
-    console.log('Internal not done: ' + images.length + ' vs. ' + finished.length + '. Skipping...');
-    setTimeout(completePageImage, 100, page, bgImageName, imageName, font, fontfamily, contents, images, finished);
+function completePageImage(page, bgImageName, imageName, font, fontfamily, contents, intImgs, intFinit) {
+  if (intImgs.length != intFinit.length) {
+    console.log('Waiting for interior images: ' + intImgs.length + ' vs. ' + intFinit.length + '. Skipping...');
+    setTimeout(completePageImage, 100, page, bgImageName, imageName, font, fontfamily, contents, intImgs, intFinit);
   } else {
     im.convert([
       '-page', '+0+0', bgImageName,
