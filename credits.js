@@ -139,7 +139,7 @@ function videoFromImages() {
     setTimeout(videoFromImages, 100);
   } else {
     var outfile = text + '.mp4';
-    fs.stat(outfile, function(err, stat) {
+    fs.stat(outfile, function(err) {
       if(err == null) {
         fs.unlink(outfile);
       }
@@ -177,7 +177,7 @@ function createBackgroundImage(imgfolder, bgimage, number, imageName) {
       '-gravity', 'Center',
       '-extent', fullWidth + 'x' + fullHeight,
       imageName
-    ], function (err, output) {
+    ], function (err) {
       if (err) {
         console.log(err);
       } else {
@@ -189,7 +189,7 @@ function createBackgroundImage(imgfolder, bgimage, number, imageName) {
       '-size', fullWidth + 'x' + fullHeight,
       'xc:#000030',
       imageName
-    ], function (err, output) {
+    ], function (err) {
       if (err) {
         console.log(err);
       } else {
@@ -220,7 +220,7 @@ function createPageImage(page, nlines, bgImageName, imageName, font, fontfamily,
         cmdConvert.push(internalName);
         internalImages.push(internalName);
 
-        im.convert(cmdConvert, function(err, output) {
+        im.convert(cmdConvert, function(err) {
           if (err) {
             console.log(err);
           }
@@ -263,7 +263,7 @@ function completePageImage(page, bgImageName, imageName, font, fontfamily, conte
       'pango:<span foreground=\'#F0F0B0\' font=\'' + fontfamily + '\'>' + contents + '</span>',
       '-layers', 'flatten',
       imageName
-    ], function (err, output) {
+    ], function (err) {
       if (err) {
         console.log(err);
       }
