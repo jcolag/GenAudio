@@ -205,6 +205,7 @@ function createPageImage(page, nlines, bgImageName, imageName, font, fontfamily,
   internalImages = [];
   internalFinished = [];
   if (nlines > 0) {
+    var lineHeight = fullHeight / nlines;
 
     for (var l = 0; l < lines.length; l++) {
       if (lines[l].startsWith('[')) {
@@ -225,7 +226,13 @@ function createPageImage(page, nlines, bgImageName, imageName, font, fontfamily,
             console.log(err);
           }
           
-          internalFinished.push(internalName);
+          var imageItem = {};
+          
+          imageItem.imageName = internalName;
+          imageItem.page = page;
+          imageItem.height = lineHeight;
+          imageItem.line = l;
+          internalFinished.push(imageItem);
         });
 
         lines[l] = '';
