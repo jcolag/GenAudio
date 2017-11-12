@@ -202,8 +202,8 @@ function createBackgroundImage(imgfolder, bgimage, number, imageName) {
 function createPageImage(page, nlines, bgImageName, imageName, font, fontfamily, lines, blocks) {
   var contents = lines.join('\n');
 
-  internalImages = [];
-  internalFinished = [];
+  var internalImages = [];
+  var internalFinished = [];
   if (nlines > 0) {
     var lineHeight = fullHeight / nlines;
 
