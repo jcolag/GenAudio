@@ -112,7 +112,6 @@ lineReader.on('close', function() {
 
 function foregroundImages() {
   if (images.length != finished.length) {
-    console.log('Waiting for image processing (' + finished.length + ' of ' + images.length + ')...');
     setTimeout(foregroundImages, 100);
   } else {
     pages = screens.length;
@@ -135,7 +134,6 @@ function foregroundImages() {
 
 function videoFromImages() {
   if (images.length != finished.length) {
-    console.log('Waiting for image processing (' + finished.length + ' of ' + images.length + ')...');
     setTimeout(videoFromImages, 100);
   } else {
     var outfile = text + '.mp4';
@@ -201,9 +199,9 @@ function createBackgroundImage(imgfolder, bgimage, number, imageName) {
 
 function createPageImage(page, nlines, bgImageName, imageName, font, fontfamily, lines, blocks) {
   var contents = lines.join('\n');
-
   var internalImages = [];
   var internalFinished = [];
+
   if (nlines > 0) {
     var lineHeight = fullHeight / nlines;
 
@@ -256,7 +254,6 @@ function fillBlocks(blocks, lines, font, fontsize) {
 
 function completePageImage(page, bgImageName, imageName, font, fontfamily, contents, intImgs, intFinit) {
   if (intImgs.length != intFinit.length) {
-    console.log('Waiting for interior images: ' + intImgs.length + ' vs. ' + intFinit.length + '. Skipping...');
     setTimeout(completePageImage, 100, page, bgImageName, imageName, font, fontfamily, contents, intImgs, intFinit);
   } else {
     im.convert([
