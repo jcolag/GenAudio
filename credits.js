@@ -256,6 +256,30 @@ function composePageImage(page, bgImageName, imageName, font, fontfamily, conten
   if (intImgs.length != intFinit.length) {
     setTimeout(completePageImage, 100, page, bgImageName, imageName, font, fontfamily, contents, intImgs, intFinit);
   } else {
+    for (var i = 0; i < intFinit.length; i++) {
+      var img = intFinit[i];
+      var yoff = img.line * img.height - img.height / 2 - fullHeight / 2;
+      var name = img.imageName;
+      var tempName = bgImageName.replace('bg-', 'temp-bg-');
+      
+      console.log('page ' + page + ', line ' + img.line + ', line height ' + img.height + ', offset ' + yoff);
+      im.convert([
+        bgImageName, name,
+        '-gravity', 'center',
+        '-geometry', '+0+' + yoff,
+        '-composite',
+        tempName
+      ], function (err) {
+        if (err) {
+          console.log(err);
+        }
+        
+        fs.unlinkSync(bgImageName);
+        fs.unlinkSync(name);
+        fs.renameSync(tempName, bgImageName);
+      });
+    }
+    
     im.convert([
       '-page', '+0+0', bgImageName,
       '-background', 'rgba(0,0,0,0)',
