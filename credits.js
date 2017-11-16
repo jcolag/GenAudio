@@ -256,6 +256,8 @@ function composePageImage(page, bgImageName, imageName, font, fontfamily, conten
   if (intImgs.length != intFinit.length) {
     setTimeout(completePageImage, 100, page, bgImageName, imageName, font, fontfamily, contents, intImgs, intFinit);
   } else {
+    var done = [];
+    
     for (var i = 0; i < intFinit.length; i++) {
       var img = intFinit[i];
       var yoff = img.line * img.height - img.height / 2 - fullHeight / 2;
@@ -277,9 +279,13 @@ function composePageImage(page, bgImageName, imageName, font, fontfamily, conten
         fs.unlinkSync(bgImageName);
         fs.unlinkSync(name);
         fs.renameSync(tempName, bgImageName);
+        done.push(bgImageName);
       });
     }
     
+    if (intFinit.length == 0) {
+      done.push(bgImageName);
+    }
     im.convert([
       '-page', '+0+0', bgImageName,
       '-background', 'rgba(0,0,0,0)',
