@@ -286,6 +286,15 @@ function composePageImage(page, bgImageName, imageName, font, fontfamily, conten
     if (intFinit.length == 0) {
       done.push(bgImageName);
     }
+    
+    setTimeout(completePageImage, 100, page, bgImageName, imageName, font, fontfamily, contents, done);
+  }
+}
+    
+function completePageImage(page, bgImageName, imageName, font, fontfamily, contents, done) {
+  if (done.length == 0) {
+    setTimeout(completePageImage, 100, page, bgImageName, imageName, font, fontfamily, contents, done);
+  } else {
     im.convert([
       '-page', '+0+0', bgImageName,
       '-background', 'rgba(0,0,0,0)',
