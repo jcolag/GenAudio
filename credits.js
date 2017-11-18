@@ -198,7 +198,6 @@ function createBackgroundImage(imgfolder, bgimage, number, imageName) {
 }
 
 function createPageImage(page, nlines, bgImageName, imageName, font, fontfamily, lines, blocks) {
-  var contents = lines.join('\n');
   var internalImages = [];
   var internalFinished = [];
 
@@ -238,6 +237,8 @@ function createPageImage(page, nlines, bgImageName, imageName, font, fontfamily,
     }
   }
   
+  var contents = lines.join('\n');
+
   fillBlocks(blocks, lines, font, fontsize);
   setTimeout(composePageImage, 100, page, bgImageName, imageName, font, fontfamily, contents, internalImages, internalFinished);
 }
