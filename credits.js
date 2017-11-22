@@ -283,6 +283,12 @@ function composePageImage(page, bgImageName, imageName, font, fontfamily, conten
       fs.unlinkSync(name);
       fs.renameSync(tempName, bgImageName);
       done.push(bgImageName);
+      if (intImgs.length > 1) {
+        for (var i = 0; i < intImgs.length; i++) {
+          fs.unlink(intImgs[i]);
+        }
+      }
+    });
   }
 
   if (intFinit.length == 0) {
