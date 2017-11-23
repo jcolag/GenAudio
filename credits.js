@@ -255,7 +255,7 @@ function fillBlocks(blocks, lines, font, fontsize) {
 
 function composePageImage(page, bgImageName, imageName, font, fontfamily, contents, intImgs, intFinit) {
   if (intImgs.length != intFinit.length) {
-    setTimeout(completePageImage, 100, page, bgImageName, imageName, font, fontfamily, contents, intImgs, intFinit);
+    setTimeout(composePageImage, 100, page, bgImageName, imageName, font, fontfamily, contents, intImgs, intFinit);
     return;
   }
 
