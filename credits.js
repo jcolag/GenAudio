@@ -139,7 +139,7 @@ function videoFromImages() {
     var outfile = text + '.mp4';
     fs.stat(outfile, function(err) {
       if(err == null) {
-        fs.unlink(outfile);
+        fs.unlinkSync(outfile);
       }
       cp.spawnSync('/usr/bin/ffmpeg', [
         '-framerate', 1 / timePerPage,
@@ -161,7 +161,7 @@ function videoFromImages() {
         text + '.mp4'
       ]);
       for (var i = 0; i < images.length; i++) {
-        fs.unlink(images[i]);
+        fs.unlinkSync(images[i]);
       }
     });
   }
@@ -285,7 +285,7 @@ function composePageImage(page, bgImageName, imageName, font, fontfamily, conten
       done.push(bgImageName);
       if (intImgs.length > 1) {
         for (var i = 0; i < intImgs.length; i++) {
-          fs.unlink(intImgs[i]);
+          fs.unlinkSync(intImgs[i]);
         }
       }
     });
