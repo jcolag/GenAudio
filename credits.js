@@ -203,6 +203,7 @@ function createPageImage(page, nlines, bgImageName, imageName, font, fontfamily,
 
   if (nlines > 0) {
     var lineHeight = fullHeight / nlines;
+    var imageLine = -1;
 
     for (var l = 0; l < lines.length; l++) {
       if (lines[l].startsWith('[')) {
@@ -210,6 +211,7 @@ function createPageImage(page, nlines, bgImageName, imageName, font, fontfamily,
         var internalName = 'line-' + ('00' + l).slice(-2) + '.png';
         var cmdConvert = [];
 
+        imageLine = l + 1;
         for (var ii = 0 ; ii < imagelist.length; ii++) {
           cmdConvert.push(imgfolder + '/' + imagelist[ii].slice(1, -1));
         }
@@ -228,7 +230,7 @@ function createPageImage(page, nlines, bgImageName, imageName, font, fontfamily,
           imageItem.imageName = internalName;
           imageItem.page = page;
           imageItem.height = lineHeight;
-          imageItem.line = l;
+          imageItem.line = imageLine;
           internalFinished.push(imageItem);
         });
 
