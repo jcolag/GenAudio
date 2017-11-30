@@ -291,7 +291,7 @@ function composePageImage(page, bgImageName, imageName, font, fontfamily, conten
     });
   }
 
-  if (intFinit.length == 0) {
+  if (intImgs.length == 0) {
     done.push(bgImageName);
   }
 
