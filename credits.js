@@ -209,6 +209,8 @@ function createPageImage(page, nlines, bgImageName, imageName, font, fontfamily,
         var internalName = 'line-' + ('00' + l).slice(-2) + '.png';
         var cmdConvert = [];
 
+        internalImages.push(internalName);
+        lines[l] = '';
         imageLine = l + 1;
         for (var ii = 0 ; ii < imagelist.length; ii++) {
           cmdConvert.push(imgfolder + '/' + imagelist[ii].slice(1, -1));
@@ -216,7 +218,6 @@ function createPageImage(page, nlines, bgImageName, imageName, font, fontfamily,
 
         cmdConvert.push('+append');
         cmdConvert.push(internalName);
-        internalImages.push(internalName);
 
         im.convert(cmdConvert, function(err) {
           if (err) {
@@ -231,8 +232,6 @@ function createPageImage(page, nlines, bgImageName, imageName, font, fontfamily,
           imageItem.line = imageLine;
           internalFinished.push(imageItem);
         });
-
-        lines[l] = '';
       }
     }
   }
