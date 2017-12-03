@@ -266,7 +266,6 @@ function composePageImage(page, bgImageName, imageName, font, fontfamily, conten
     var name = img.imageName;
     var tempName = bgImageName.replace('bg-', 'temp-bg-');
 
-    console.log('page ' + page + ', line ' + img.line + ', line height ' + img.height + ', offset ' + yoff + '(' + bgImageName + ')');
     im.convert([
       bgImageName, name,
       '-gravity', 'center',
