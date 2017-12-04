@@ -97,7 +97,7 @@ if (style === 'g') {
 }
 console.log(endcode);
 
-function play_sound(size, instrument, volume) {
+function play_sound(size, instrument) {
   var max_pitch = 100.0;
   var log_used = 1.0715307808111486871978099;
   var halfnote = 1.09463094;
