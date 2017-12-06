@@ -47,17 +47,9 @@ var proc = cp.spawnSync('/usr/bin/soxi', [ '-D', audioDir + sfxFileName ]);
 var time = parseFloat(proc.stdout.toString().trim(), 10);
 var frameRate = 1 / time;
 
-var width = 0;
-var height = 0;
-
-im.identify(imageFile, function (err, features) {
+im.identify(imageFile, function (err) {
   if (err) throw err;
   var dir = 'Center';
-  width = features.width;
-  height = features.height;
-  var xoff = Math.trunc((fullWidth - width) / 2);
-  var yoff = Math.trunc((fullHeight - height) / 2);
-  var geo = '+' + xoff + '+' + yoff;
   dir = 'North';
 
   im.convert([
@@ -67,7 +59,7 @@ im.identify(imageFile, function (err, features) {
       '-background', background,
       '-extent', fullWidth + 'x' + fullHeight,
       'resized_' + imageBaseName
-    ], function (err, output) {
+    ], function (err) {
     if (err) {
       console.log(err);
     }
