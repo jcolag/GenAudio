@@ -37,7 +37,7 @@ if (soundFolder.slice(-1) != '/') {
 
 var indexName = soundFolder + '/index.txt';
 var soundIndex = fs.readFileSync(indexName).toString().split('\n');
-soundIndex.forEach(function (line, index, array) {
+soundIndex.forEach(function (line, index) {
   soundIndex[index] = line.split('\t');
 });
 
@@ -48,7 +48,7 @@ var lineReader = readline.createInterface({
   terminal: false,
   input: fs.createReadStream(script),
 });
-fs.stat('soundeffects.csv', function(err, stat) {
+fs.stat('soundeffects.csv', function(err) {
   if (err != null) {
     fs.unlink('soundeffects.csv');
   }
@@ -61,7 +61,7 @@ lineReader.on('line', function (line) {
   var init = line[0];
   if (init == '(' || init == '#' || init.toUpperCase() != init) {
     var wordno = 1;
-    line.split(' ').forEach(function (word, index, array) {
+    line.split(' ').forEach(function (word) {
       if (word[0] == '[') {
         var continuing = false;
         if (word.slice(-1) == ','
@@ -91,14 +91,14 @@ lineReader.on('line', function (line) {
     backgroundSounds.push('speech' + (lineno - 2) + '.wav');
   }
   lineno += 1;
-}).on('close', function (err) {
+}).on('close', function () {
   var timecode = 0.0;
   var channels = 0;
   var brate = 0;
   var srate = 0;
 
   cp.spawnSync('/usr/bin/rec', [ output, 'trim', 0, 0 ])
-  fs.readdirSync(destFolder).forEach(function (file, index, array) {
+  fs.readdirSync(destFolder).forEach(function (file) {
     var proc = cp.spawnSync('/usr/bin/soxi', [ '-c', destFolder + file ]);
     var c = parseInt(proc.stdout.toString().trim(), 10);
     proc = cp.spawnSync('/usr/bin/soxi', [ '-b', destFolder + file ]);
@@ -112,9 +112,9 @@ lineReader.on('line', function (line) {
   if (srate > 48000) {
     srate = 48000;
   }
-  fs.readdirSync(destFolder).sort(audioFileSort).forEach(function (file, index, array) {
+  fs.readdirSync(destFolder).sort(audioFileSort).forEach(function (file) {
     var background = false;
-    backgroundSounds.forEach(function (name, index, array) {
+    backgroundSounds.forEach(function (name) {
       if (file == name) {
         background = true;
       }
@@ -153,7 +153,7 @@ lineReader.on('line', function (line) {
       console.log(file + ' appended, total time at ' + timecode);
     }
   });
-  fs.readdirSync(tmpDir.name).sort(audioFileSort).forEach(function (file, index, array) {
+  fs.readdirSync(tmpDir.name).sort(audioFileSort).forEach(function (file) {
     var mix = cp.spawnSync('/usr/bin/sox',
       [ '-m', output, tmpDir.name + '/' + file, tmpDir.name + '/' + output ]);
     if (mix.stderr.toString().trim() != '') {
@@ -175,8 +175,8 @@ lineReader.on('line', function (line) {
 function audioFileSort(a, b) {
   var aNames = a.slice(plen).split('-');
   var bNames = b.slice(plen).split('-');
-  aNames.forEach(function (n, i, a) { aNames[i] = parseInt(n, 10); });
-  bNames.forEach(function (n, i, a) { bNames[i] = parseInt(n, 10); });
+  aNames.forEach(function (n, i) { aNames[i] = parseInt(n, 10); });
+  bNames.forEach(function (n, i) { bNames[i] = parseInt(n, 10); });
   if (aNames[0] > bNames[0]) {
     return 1;
   } else if (aNames[0] < bNames[0]) {
@@ -194,7 +194,7 @@ function audioFileSort(a, b) {
 
 function fileNameFromCode(index, code) {
   var out = null;
-  index.forEach(function (item, index, array) {
+  index.forEach(function (item) {
     if (item[0] == code.toString() || item[1] == code) {
       out = item[4];
     }
