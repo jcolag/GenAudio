@@ -26,7 +26,7 @@ im.convert([
   '-size', fullWidth + 'x' + fullHeight,
   'xc:' + background,
   imageName
-], function (err, output) {
+], function (err) {
   if (err) {
     console.log(err);
   }
