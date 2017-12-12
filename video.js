@@ -98,7 +98,7 @@ im.identify(imageFile, function (err, features) {
       '-opaque', foreground,
       '-extent', fullWidth + 'x' + fullHeight,
       'resized_' + imageBaseName
-    ], function (err, output) {
+    ], function (err) {
     if (err) {
       console.log(err);
     }
@@ -110,7 +110,7 @@ im.identify(imageFile, function (err, features) {
       '-annotate', geo,
       lineRead,
       'text_' + imageBaseName
-      ], function (err, output) {
+      ], function () {
       var videoName = outDir + '/video' + ('00000' + lineNumber).slice(-5) + '.mp4';
       fs.unlink('resized_' + imageBaseName);
       cp.spawnSync('/usr/bin/ffmpeg', [
