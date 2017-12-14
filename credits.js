@@ -8,6 +8,7 @@ const fullWidth = 1920;
 const fullHeight = 1080;
 
 const optionDefinitions = [
+  { name: 'configfile', alias: 'c', type: String },
   { name: 'delimiter', alias: 'd', type: String },
   { name: 'font', alias: 'f', type: String },
   { name: 'fontfamily', alias: 'a', type: String },
@@ -52,18 +53,43 @@ class TextBlock {
   }
 }
 
-var delimiter = options.hasOwnProperty('delimiter') ? options.delimiter : '===';
-var font = options.font;
-var fontfamily = options.fontfamily;
-var nlines = options.hasOwnProperty('lines') ? options.lines : -1;
-var music = options.music;
-var fontsize = options.hasOwnProperty('size') ? options.size : '48';
-var text = options.text;
-var imgfolder = options.hasOwnProperty('imagefolder') ? options.imagefolder : '';
+var fileconfig = options.hasOwnProperty('configfile') ? options.configfile : null;
+var config = null;
+var delimiter = '===';
+var font = null;
+var fontfamily = null;
+var nlines = -1;
+var music = null;
+var fontsize = 48;
+var text = null;
+var imgfolder = '';
 
-if (!options.hasOwnProperty('fontfamily')
- || !options.hasOwnProperty('music')
- || !options.hasOwnProperty('text')) {
+if (fileconfig != null && fs.existsSync(fileconfig)) {
+  config = JSON.parse(fs.readFileSync(fileconfig, 'utf-8'));
+  if (config != null) {
+    delimiter = config.delimiter;
+    font = config.font;
+    fontfamily = config.fontfamily;
+    nlines = config.lines;
+    music = config.music;
+    fontsize = config.size;
+    text = config.text;
+    imgfolder = config.imagefolder;
+  }
+}
+
+var delimiter = options.hasOwnProperty('delimiter') ? options.delimiter : delimiter;
+var font = options.hasOwnProperty('font') ? options.font : font;
+var fontfamily = options.hasOwnProperty('fontfamily') ? options.fontfamily : fontfamily;
+var nlines = options.hasOwnProperty('lines') ? options.lines : nlines;
+var music = options.hasOwnProperty('music') ? options.music : music;
+var fontsize = options.hasOwnProperty('size') ? options.size : fontsize;
+var text = options.hasOwnProperty('text') ? options.text : text;
+var imgfolder = options.hasOwnProperty('imagefolder') ? options.imagefolder : imgfolder;
+
+if (fontfamily == null
+ || music == null
+ || text == null) {
   // Can't do anything useful without input
   return;
 }
