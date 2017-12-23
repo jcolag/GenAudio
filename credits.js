@@ -78,14 +78,14 @@ if (fileconfig != null && fs.existsSync(fileconfig)) {
   }
 }
 
-var delimiter = options.hasOwnProperty('delimiter') ? options.delimiter : delimiter;
-var font = options.hasOwnProperty('font') ? options.font : font;
-var fontfamily = options.hasOwnProperty('fontfamily') ? options.fontfamily : fontfamily;
-var nlines = options.hasOwnProperty('lines') ? options.lines : nlines;
-var music = options.hasOwnProperty('music') ? options.music : music;
-var fontsize = options.hasOwnProperty('size') ? options.size : fontsize;
-var text = options.hasOwnProperty('text') ? options.text : text;
-var imgfolder = options.hasOwnProperty('imagefolder') ? options.imagefolder : imgfolder;
+delimiter = options.hasOwnProperty('delimiter') ? options.delimiter : delimiter;
+font = options.hasOwnProperty('font') ? options.font : font;
+fontfamily = options.hasOwnProperty('fontfamily') ? options.fontfamily : fontfamily;
+nlines = options.hasOwnProperty('lines') ? options.lines : nlines;
+music = options.hasOwnProperty('music') ? options.music : music;
+fontsize = options.hasOwnProperty('size') ? options.size : fontsize;
+text = options.hasOwnProperty('text') ? options.text : text;
+imgfolder = options.hasOwnProperty('imagefolder') ? options.imagefolder : imgfolder;
 
 if (fontfamily == null
  || music == null
