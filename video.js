@@ -112,7 +112,7 @@ im.identify(imageFile, function (err, features) {
       'text_' + imageBaseName
       ], function () {
       var videoName = outDir + '/video' + ('00000' + lineNumber).slice(-5) + '.mp4';
-      fs.unlink('resized_' + imageBaseName);
+      fs.unlinkSync('resized_' + imageBaseName);
       cp.spawnSync('/usr/bin/ffmpeg', [
         '-framerate', '1/' + time,
         '-i', 'text_' + imageBaseName,
@@ -128,7 +128,7 @@ im.identify(imageFile, function (err, features) {
         '-pix_fmt', 'yuv420p',
         videoName
       ]);
-      fs.unlink('text_' + imageBaseName);
+      fs.unlinkSync('text_' + imageBaseName);
     });
   });
 });

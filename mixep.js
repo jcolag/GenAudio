@@ -50,7 +50,7 @@ var lineReader = readline.createInterface({
 });
 fs.stat('soundeffects.csv', function(err) {
   if (err != null) {
-    fs.unlink('soundeffects.csv');
+    fs.unlinkSync('soundeffects.csv');
   }
 });
 lineReader.on('line', function (line) {

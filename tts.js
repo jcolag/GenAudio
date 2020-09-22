@@ -36,7 +36,7 @@ var lineReader = readline.createInterface({
   terminal: false,
   input: fs.createReadStream(filename)
 });
-fs.unlink('whospeak.csv');
+fs.unlinkSync('whospeak.csv');
 if (!fs.existsSync(outDir)){
     fs.mkdirSync(outDir);
 }
@@ -77,7 +77,7 @@ lineReader.on('line', function (line) {
 
     fs.appendFileSync('whospeak.csv', lineno.toString() + ',' + fullname + ',' + line.replace(',', '|') + '\n');
   }
-  
+
   lineno += 1;                  // Next line
 });
 

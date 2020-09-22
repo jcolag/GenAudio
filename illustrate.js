@@ -78,6 +78,6 @@ im.identify(imageFile, function (err) {
       '-pix_fmt', 'yuv420p',
       outFileName
     ]);
-    fs.unlink('resized_' + imageBaseName);
+    fs.unlinkSync('resized_' + imageBaseName);
   });
 });

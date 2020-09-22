@@ -52,17 +52,17 @@ lineReader.on('line', function (line) {
     var reDelimiter = new RegExp('^' + delimiter, 'i');
     var bgimage = line.replace(reDelimiter, '').trim();
     var imageName = './bg-' + ('0000' + (screens.length + 1)).slice(-5) + '.png';
-    
+
     images.push(imageName);
     createBackgroundImage(imgfolder, bgimage, screens.length, imageName);
-    
+
     if (length < nlines) {
       var toAdd = Math.trunc((nlines - length) / 2);
       for (var l = 0; l < toAdd; l++) {
         screenful.unshift('');
       }
     }
-    
+
     screens.push(screenful);
     screenful = [];
   } else {
@@ -88,7 +88,7 @@ function foregroundImages() {
       var imageName = './credit-' + pageNumber + '.png';
       var bgImageName = './bg-' + pageNumber + '.png';
       var lines = screens[page];
-    
+
       images.push(imageName);
       createPageImage(page, nlines, bgImageName, imageName, fontfamily, lines);
     }
@@ -103,7 +103,7 @@ function videoFromImages() {
     var outfile = text + '.mp4';
     fs.stat(outfile, function(err, stat) {
       if(err == null) {
-        fs.unlink(outfile);
+        fs.unlinkSync(outfile);
       }
       cp.spawnSync('/usr/bin/ffmpeg', [
         '-framerate', 1 / timePerPage,
@@ -125,7 +125,7 @@ function videoFromImages() {
         text + '.mp4'
       ]);
       for (var i = 0; i < images.length; i++) {
-        fs.unlink(images[i]);
+        fs.unlinkSync(images[i]);
       }
     });
   }
