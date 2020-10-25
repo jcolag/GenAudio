@@ -1,3 +1,6 @@
+#Libraries
+node_modules/
+
 #Backups
 *~
 festin.txt
@@ -8,4 +11,12 @@ clips/
 
 #Audio Files
 *.wav
+
+#Input Files
+*.txt
+*.csv
+*.json
+
+#Output Files
+*.mp4
 
